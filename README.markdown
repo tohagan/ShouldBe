@@ -56,6 +56,8 @@ If you want to check that a particular call does/does not throw an exception, it
 * Improved enumeration failure messages to show "missing" and "not expected" lists:
 
 
+Assertion:
+
     new[] { 2, 7, 10, 9 }.ShouldBeTheSet(new[] { 2, 3, 10, 15, 9 }
 
 Outputs:
@@ -80,7 +82,7 @@ Outputs:
   * Added additional typesafe enumeration methods for matching Sequences and Sets of values.
   * Replaced all 'throw new ChuckAWobly(msg)' with NUnit's 'Assert.Fail(msg)' calls. 
     * Improves integratation with NUnit and NUnit compatible tools like [Resharper](http://www.jetbrains.com/resharper)
-    * Made safer to use when running unit tests with non-debug builds.
+    * Refactored assertion reporting still works when running unit tests with non-debug builds and when source is not available.
   * Fixed regex bug in StripWhiteSpace() extention method.
   * Fixed Bug in the Should.FailWithError() that caused some unit tests in ShouldBe.UnitTest project to always succeed.
   * Improved internal unit test coverage.
@@ -101,9 +103,9 @@ for use on our projects.
 
 Main reasons included:
   * Dependencies on too many external components and libs.  (All we needed was NUnit)
-  * Some API Breaking changes.
+  * Some API Breaking changes that might not align with where Shoudly was heading.
   * Refactoring of the reporting system (we kept the key concept).
-  * More freedom to adapt/extend the API (e.g. fluent API support)
+  * More freedom for us to adapt/extend the API (e.g. fluent API support)
 
 ### To Do
   * Additional unit test cases are needed to cover missing unit tests.  
@@ -175,7 +177,8 @@ It inspired us to modify ShouldBe to be fluent!
     ShouldNotMatch (new)
 
 ### Dictionary
-    ShouldContainKeyShouldContainKeyAndValue
+    ShouldContainKey
+    ShouldContainKeyAndValue
     ShouldNotContainKey
     ShouldNotContainKeyAndValue
     ShouldNotContainValueForKey (new)
