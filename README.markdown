@@ -55,6 +55,7 @@ If you want to check that a particular call does/does not throw an exception, it
   The method named "ShouldBeTheSet()" converts to "should be the set" in the final message.
 * Improved enumeration failure messages to show "missing" and "not expected" lists:
 
+
     new[] { 2, 7, 10, 9 }.ShouldBeTheSet(new[] { 2, 3, 10, 15, 9 }
 
 Outputs:
@@ -78,7 +79,7 @@ Outputs:
   * Removed dependency on other unit test frameworks (I only needed NUnit)
   * Added additional typesafe enumeration methods for matching Sequences and Sets of values.
   * Replaced all 'throw new ChuckAWobly(msg)' with NUnit's 'Assert.Fail(msg)' calls. 
-    * Improves integratation with NUnit and NUnit compatible tools like [http://www.jetbrains.com/resharper/](Resharper)
+    * Improves integratation with NUnit and NUnit compatible tools like [Resharper](http://www.jetbrains.com/resharper)
     * Made safer to use when running unit tests with non-debug builds.
   * Fixed regex bug in StripWhiteSpace() extention method.
   * Fixed Bug in the Should.FailWithError() that caused some unit tests in ShouldBe.UnitTest project to always succeed.
