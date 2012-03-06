@@ -11,7 +11,7 @@ https://github.com/tohagan/ShouldBe
 This is the old *Assert* way: 
 
     Assert.That(contestant.Points, Is.EqualTo(1337));
-    
+
 For your troubles, you get this message, when it fails:
 
     Expected 1337 but was 0
@@ -19,7 +19,7 @@ For your troubles, you get this message, when it fails:
 How it **Should** be:
 
     contestant.Points.ShouldBe(1337);
-    
+
 Which is just syntax, so far, but check out the message when it fails:
 
     contestant.Points should be 1337 but was 0
@@ -30,9 +30,9 @@ It might be easy to underestimate how useful this is. Another example, side by s
     map.IndexOfValue("boo").ShouldBe(2);                    // -> map.IndexOfValue("boo") should be 2 but was 1
 
 If you want to check that a particular call does/does not throw an exception, it's as simple as:
-    
+
     Should.ThrowException<ArgumentOutOfRangeException>(() => widget.Twist(-1));
-	
+
 ### Features:
 * Extension methods wrapper NUnit Asserts in order to write cleaner more readable Unit Tests
   * Fast to code with Intellisense in VS.NET or other tools.
@@ -57,22 +57,22 @@ If you want to check that a particular call does/does not throw an exception, it
   The method named "ShouldBeTheSet()" converts to "should be the set" in the final message.
 
 * Improved enumeration failure messages to show "missing" and "not expected" lists:
-	
-	new[] { 2, 7, 10, 9 }.ShouldBeTheSet(new[] { 2, 3, 10, 15, 9 }
+
+    new[] { 2, 7, 10, 9 }.ShouldBeTheSet(new[] { 2, 3, 10, 15, 9 }
 
 Outputs:
-	
-	new[] { 2, 7, 10, 9 } 
-	  should be the set 
-	[2, 3, 9, 10, 15] 
-	   but was 
-	[2, 7, 9, 10] 
-	   difference 
-	[2, *7*, 9, 10, *] 
-	   missing 
-	[3, 15] 
-	  not expected 
-	[7]
+
+    new[] { 2, 7, 10, 9 } 
+      should be the set 
+    [2, 3, 9, 10, 15] 
+       but was 
+    [2, 7, 9, 10] 
+       difference 
+    [2, *7*, 9, 10, *] 
+       missing 
+    [3, 15] 
+      not expected 
+    [7]
 
 ### Updates from the original Shouldly unit test library:
   * Renamed library to ShouldBe to distinguish it from original library.
@@ -81,13 +81,13 @@ Outputs:
   * Added additional typesafe enumeration methods for matching Sequences and Sets of values.
   * Replaced all 'throw new ChuckAWobly(msg)' with NUnit's 'Assert.Fail(msg)' calls. 
     * Improves integratation with NUnit and NUnit compatible tools like [http://www.jetbrains.com/resharper/](Resharper)
-	* Made safer to use when running unit tests with non-debug builds.
+    * Made safer to use when running unit tests with non-debug builds.
   * Fixed regex bug in StripWhiteSpace() extention method.
   * Fixed Bug in the Should.FailWithError() that caused some unit tests in ShouldBe.UnitTest project to always succeed.
   * Improved internal unit test coverage.
   * Removed case insensitive matching in ShouldStartWith() and ShouldContain() methods.
     - A risky "bug" in my view that could cause unit tests to unexpectedly succeed (not obvious from the name).
-	- This breaks compatability with Shouldly and so was one key reason I decided to create a new lib.
+    - This breaks compatability with Shouldly and so was one key reason I decided to create a new lib.
   * Added missing InstanceOf, AssignableFrom, AssignableTo type constrain tests (See full list of methods below)
   * Added test that source file exists before using it to report a failure 
   * All ShouldBe methods return 'actual' so assertions can be chained as a Fluent API.
@@ -99,12 +99,12 @@ Outputs:
 ### Why not just fork Shouldly?
   * We loved the great ideas in Shouldly but in it's current form we found it needed too much adaptation
     for use on our projects - some of which probably won't align with where we thought the Shouldly 
-	project was heading.
-	* Dependencies on too many external components and libs.  (All we needed was NUnit)
-	* Some API Breaking changes.
-	* Refactoring of reporting.
-	* More freedom to adapt/extend the API (e.g. fluent API support)
-	
+    project was heading.
+    * Dependencies on too many external components and libs.  (All we needed was NUnit)
+    * Some API Breaking changes.
+    * Refactoring of reporting.
+    * More freedom to adapt/extend the API (e.g. fluent API support)
+
 ### To Do
   * Additional unit test cases are needed to cover missing unit tests.  
     * Use ReSharper's coverage analyser.
@@ -130,63 +130,63 @@ Outputs:
 ## Assertion methods
 
 ### Equality
-	ShouldBe<T>
-	ShouldBe<T> (with tolerance)
-	ShouldNotBe<T>
-	ShouldBeGreaterThan(OrEqualTo)<T>
-	ShouldBeLessThan(OrEqualTo)<T>
-	ShouldBeAtLeast<T> (new)
-	ShouldBeAtMost<T> (new)
-	ShouldBeSameAs<T>
+    ShouldBe<T>
+    ShouldBe<T> (with tolerance)
+    ShouldNotBe<T>
+    ShouldBeGreaterThan(OrEqualTo)<T>
+    ShouldBeLessThan(OrEqualTo)<T>
+    ShouldBeAtLeast<T> (new)
+    ShouldBeAtMost<T> (new)
+    ShouldBeSameAs<T>
 
 ### Types
-	ShouldBeTypeOf<T>
-	ShouldNotBeTypeOf<T>
-	ShouldBeInstanceOf<T> (new)
-	ShouldNotBeInstanceOf<T> (new)
-	ShouldBeAssignableFrom<T> (new)
-	ShouldNotAssignableFrom<T> (new)
-	ShouldBeAssignableTo<T> (new)
-	ShouldNotAssignableTo<T> (new)
+    ShouldBeTypeOf<T>
+    ShouldNotBeTypeOf<T>
+    ShouldBeInstanceOf<T> (new)
+    ShouldNotBeInstanceOf<T> (new)
+    ShouldBeAssignableFrom<T> (new)
+    ShouldNotAssignableFrom<T> (new)
+    ShouldBeAssignableTo<T> (new)
+    ShouldNotAssignableTo<T> (new)
 
 ### Enumerable
-	ShouldBeEmpty
-	ShouldNotBeEmpty
-	ShouldBeTheSequence (new)
-	ShouldBeTheSet (new)
-	ShouldHaveUniqueKeys (new)
-	ShouldBeASubsetOf (new)
-	ShouldContainTheSubset (new)
-	ShouldContain
-	ShouldContain(predicate)
-	ShouldContain(tolerance)  (new)
-	ShouldNotContain
-	ShouldNotContain(predicate)
-	ShouldNotContain(tolerance)  (new)		
+    ShouldBeEmpty
+    ShouldNotBeEmpty
+    ShouldBeTheSequence (new)
+    ShouldBeTheSet (new)
+    ShouldHaveUniqueKeys (new)
+    ShouldBeASubsetOf (new)
+    ShouldContainTheSubset (new)
+    ShouldContain
+    ShouldContain(predicate)
+    ShouldContain(tolerance)  (new)
+    ShouldNotContain
+    ShouldNotContain(predicate)
+    ShouldNotContain(tolerance)  (new)        
 
 ### String
-	ShouldBeCloseTo
-	ShouldStartWith
-	ShouldEndWith
-	ShouldContain
-	ShouldNotContain
-	ShouldMatch
-	ShouldNotMatch (new)
+    ShouldBeCloseTo
+    ShouldStartWith
+    ShouldEndWith
+    ShouldContain
+    ShouldNotContain
+    ShouldMatch
+    ShouldNotMatch (new)
 
 ### Dictionary
-	ShouldContainKeyShouldContainKeyAndValue
-	ShouldNotContainKey
-	ShouldNotContainKeyAndValue
-	ShouldNotContainValueForKey (new)
+    ShouldContainKeyShouldContainKeyAndValue
+    ShouldNotContainKey
+    ShouldNotContainKeyAndValue
+    ShouldNotContainValueForKey (new)
 
 ### Exceptions
-	Should.ThrowException<T>(Action)
-	Should.ThrowExceptionContaining<T>(Action)  (new)
-	
+    Should.ThrowException<T>(Action)
+    Should.ThrowExceptionContaining<T>(Action)  (new)
+
 ### Rhino Mocks (Deprecated in Shouldly)
-	ShouldHaveBeenCalled
-	
+    ShouldHaveBeenCalled
+
 ### Failed  - Useful in writing your own custom assertions methods.
-	Failed<T>(T expected)   (new)
-	Failed<T>(T actual, T expected)   (new)
-	Failed<T>(IEnumerable<T> actual, expected)   (new)
+    Failed<T>(T expected)   (new)
+    Failed<T>(T actual, T expected)   (new)
+    Failed<T>(IEnumerable<T> actual, expected)   (new)
