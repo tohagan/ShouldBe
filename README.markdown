@@ -2,10 +2,21 @@ https://github.com/tohagan/ShouldBe
 
 ### About
 
-* A .NET / C# wrapper library for the NUnit unit test library.
-* License: BSD Open Source  (See LICENSE.txt)
-* Based on the [http://shouldly.github.com](Shouldly) library.
-  * A *HUGE* thanks for the original ideas and source code!
+* A cleaner *faster* way to code .NET / C# unit tests.
+* Wrapper API for NUnit so it integrates with existing NUnit tools.
+* **License**: BSD Open Source  (See LICENSE.txt)
+
+### Similar Libraries
+
+*http://shouldly.github.com*
+
+ShouleBe is based on the [Shouldly](http://shouldly.github.com) library. Kudos to [Xerxes Battiwalla](https://github.com/xerxesb) for the original ideas and open source.
+
+*http://should.codeplex.com/*
+  
+At first glance this API looks more fully featured but we suspect most of its features can be covered by LINQ or other .NET APIs to precompute values prior to assertion testing. So for us a smaller and simpler API was the preferred approach. Also last time I looked it lacked some of the enumeration methods we've added to ShouldBe. 
+
+This lib inspired us to modify ShouldBe to be fluent!
 
 ### Why use ShouldBe?
 
@@ -52,11 +63,11 @@ If you want to check that a particular call does/does not throw an exception, it
 
     Should.ThrowException<ArgumentOutOfRangeException>(() => widget.Twist(-1));
 
-### Features
+### Key Features
 
-* Extension methods wrapper NUnit assertions in order to write cleaner more readable Unit Tests
-  * Faster to code with Intellisense in VS.NET or other tools.
-  * Note: ShouldBe extension methods all start with 'Should' to make them group together 
+* Uses type safe extension methods that wrapper NUnit assertions in order to write cleaner more readable Unit Tests
+* Faster to code with Intellisense in VS.NET or other .NET IDE tools.
+  * All methods all start with 'Should' to make them group together 
     in intellisense lists so you can quickly find the method you need.
 * Integrates with existing NUnit runner tools and 3rd partly tools like Resharper.
   * NOTE: Removed support for additional unit test libs (found in Shouldly) 
@@ -67,27 +78,23 @@ If you want to check that a particular call does/does not throw an exception, it
    * Enforcing type safety typically avoids more unit test bugs and improves the fluent API by 
      knowing the return type. 
 * Helper methods for creating Rhino mock instances (See MockMe class)
-* In Debug build, uses the call stack to read unit test source code (if available) when reporting failure messages.
-  * See "contestant.Points" example above.
+* In Debug build, uses the call stack to read unit test source code (if available) when reporting failure messages. See "contestant.Points" example above.
 * Uses the name of the assertion method to construct the assertion failure message. 
   The method named "ShouldBeTheSet()" converts to "should be the set" in the final message.
-* Improved enumeration failure messages to show "missing" and "not expected" lists:
 
-### Updates from the original Shouldly library:
+### Changes to the original Shouldly library:
 
   * Renamed library to ShouldBe to distinguish it from original library.
-  * Removed the copy of NUnit source code included in original Shouldly lib.
-  * Removed dependency on other unit test frameworks (I only needed NUnit)
-  * Added additional typesafe enumeration methods for matching Sequences and Sets of values.
-  * Replaced all 'throw new ChuckAWobly(msg)' with NUnit's 'Assert.Fail(msg)' calls. 
-    * Improves integratation with NUnit and NUnit compatible tools like [Resharper](http://www.jetbrains.com/resharper)
-    * Refactored assertion reporting still works when running unit tests with non-debug builds and when source is not available.
+  * Removed dependency on other unit test frameworks (We only needed NUnit).
+    * Removed the copy of NUnit source code and other 3rd party libs.
+  * Added many additional assertion methods (See complete list below).
+    * e.g. Improved assertions on Sequences and Sets of values.
+  * Refactored assertion reporting
+    * Replaced all 'throw new ChuckAWobly(msg)' with NUnit's 'Assert.Fail(msg)' calls to support integratation with NUnit compatible tools like [Resharper](http://www.jetbrains.com/resharper)
+    * Reporting works better when running unit tests with non-debug builds and when source is not available.
   * Fixed regex bug in StripWhiteSpace() extention method.
-  * Fixed Bug in the Should.FailWithError() that caused some unit tests in ShouldBe.UnitTest project to always succeed.
+  * Fixed bug in the Should.FailWithError() that caused some unit tests in ShouldBe.UnitTest project to always succeed.
   * Improved internal unit test coverage.
-  * Removed case insensitive matching in ShouldStartWith() and ShouldContain() methods.
-    - A risky "bug" in my view that could cause unit tests to unexpectedly succeed (not obvious from the name).
-    - This breaks compatability with Shouldly and so was one key reason we decided to create a new lib.
   * Added missing InstanceOf, AssignableFrom, AssignableTo type constrain tests (See full list of methods below)
   * Added test that source file exists before using it to report a failure 
   * All ShouldBe methods return 'actual' so assertions can be chained as a Fluent API.
@@ -96,13 +103,21 @@ If you want to check that a particular call does/does not throw an exception, it
   * Improved enumeration failure messages to show "missing" and "not expected" lists.
     * Very useful when debugging faults in larger lists.
 
+*Breaking changes:*
+
+  * Removed case insensitive matching in ShouldStartWith() and ShouldContain() methods.
+    * A risky design in our view that could cause unit tests to unexpectedly succeed (not obvious from the method name).
+  * Renamed Should.Throw<T>() to be Should.ThrowException<T>()
+    * This naming works better with the new method: Should.ThrowExceptionContaining()
+
 ### Why not just fork Shouldly?
 We loved the great ideas in Shouldly but in it's current form we found it needed too much adaptation
-for use on our projects. 
+for use on our projects.
 
 Main reasons included:
-  * Dependencies on too many external components and libs.  (All we needed was NUnit)
-  * Some API Breaking changes that might not align with where Shoudly was heading.
+
+  * Too many external component dependencies for our needs.  (We only needed NUnit)
+  * Some API Breaking changes that might not align with where Shoudly was heading or existing projects that use it.
   * Refactoring of the reporting system (we kept the key concept).
   * More freedom for us to adapt/extend the API (e.g. fluent API support)
 
@@ -118,16 +133,6 @@ Main reasons included:
   * Review [NUnit collection methods](http://www.nunit.org/index.php?p=collectionAssert&r=2.5.9): 
     * Implement: IEnumerable<T> ShouldHaveUniqueValues<T>(this IEnumerable<T> actual) - NUnit: AllItemsAreUnique
     * Implement: IEnumerable<T> ShouldHaveOrderedValues<T>(this IEnumerable<T> actual) - NUnit: IsOrdered
-
-### Similar Libraries
-
-[http://should.codeplex.com/]
-  
-At first glance this API looks more fully featured but we suspect most of its features 
-can be covered by LINQ or other .NET APIs to precompute values prior to assertion testing.
-So for us a smaller and simpler API was the preferred approach.
-Also last time I looked it lacked some of the enumeration methods we've added to ShouldBe.
-It inspired us to modify ShouldBe to be fluent!
 
 ## Assertion methods
 
