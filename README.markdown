@@ -1,10 +1,10 @@
 https://github.com/tohagan/ShouldBe
 
 ### About
-  * A .NET / C# wrapper library for the NUnit unit test library.
-  * License: BSD Open Source  (See LICENSE.txt)
-  * History: Based on the [http://shouldly.github.com](Shouldly) library.
-    * A *HUGE* /hat's off/ for the original ideas and source code.
+* A .NET / C# wrapper library for the NUnit unit test library.
+* License: BSD Open Source  (See LICENSE.txt)
+* Based on the [http://shouldly.github.com](Shouldly) library.
+  * A *HUGE* thanks for the original ideas and source code!
 
 ### Why use ShouldBe?
 
@@ -34,40 +34,45 @@ If you want to check that a particular call does/does not throw an exception, it
     Should.ThrowException<ArgumentOutOfRangeException>(() => widget.Twist(-1));
 	
 ### Features:
-  * Extension methods wrapper NUnit Asserts in order to write cleaner more readable Unit Tests.
-    * Fast to code with Intellisense in VS.NET or other tools.
-    * Extension methods all start with 'Should' to make them group together in intellisense lists.
+* Extension methods wrapper NUnit Asserts in order to write cleaner more readable Unit Tests
+  * Fast to code with Intellisense in VS.NET or other tools.
+  * Extension methods all start with 'Should' to make them group together in intellisense lists.
 
-  * Integrates with existing NUnit runner tools and 3rd partly tools like Resharper.
-    * NOTE: I removed support for additional unit test libs (found in Shouldly) as this just complicated our build environment.
+* Integrates with existing NUnit runner tools and 3rd partly tools like Resharper.
+  * NOTE: I removed support for additional unit test libs (found in Shouldly) 
+    as this just complicated our build environment.
 
-  * Where feasible, wrapper methods are intentionally typesafe (in contrast to many NUnit methods).
-     * In most cases, actual and expected argument types can be inferred and checked by the compiler. The type does not need to be declared.
-     * Enforcing type safety typically avoids more unit test bugs and improves the fluent API by knowing the return type. 
+* Where feasible, wrapper methods are intentionally typesafe (in contrast to many NUnit methods).
+   * In most cases, actual and expected argument types can be inferred and checked by the compiler. 
+     The type does  not need to be declared.
+   * Enforcing type safety typically avoids more unit test bugs and improves the fluent API by 
+     knowing the return type. 
 
-  * Helper methods for creating Rhino mock instances (See MockMe class)
+* Helper methods for creating Rhino mock instances (See MockMe class)
 
-  * In Debug build, uses the call stack to read unit test source code (if available) when reporting failure messages.
-    -  Assertion:  (1+1).ShouldBe(1);
-       Reports:    "(1+1) should be 1 but was 2"
+* In Debug build, uses the call stack to read unit test source code (if available) when reporting failure messages.
+  * See "contestant.Points" example above.
 
-  * Uses the name of the assertion method to construct the assertion failure message. 
-      The method named "ShouldBeTheSet()" converts to "should be the set" in the final message.
-	  
-  * Improved enumeration failure messages to show "missing" and "not expected" lists:
-    - Assertion: new[] { 2, 7, 10, 9 }.ShouldBeTheSet(new[] { 2, 3, 10, 15, 9 }
-      Reports: 
-        new[] { 2, 7, 10, 9 } 
-          should be the set 
-        [2, 3, 9, 10, 15] 
-           but was 
-        [2, 7, 9, 10] 
-           difference 
-        [2, *7*, 9, 10, *] 
-           missing 
-        [3, 15] 
-          not expected 
-        [7]
+* Uses the name of the assertion method to construct the assertion failure message. 
+  The method named "ShouldBeTheSet()" converts to "should be the set" in the final message.
+
+* Improved enumeration failure messages to show "missing" and "not expected" lists:
+	
+	new[] { 2, 7, 10, 9 }.ShouldBeTheSet(new[] { 2, 3, 10, 15, 9 }
+
+Outputs:
+	
+	new[] { 2, 7, 10, 9 } 
+	  should be the set 
+	[2, 3, 9, 10, 15] 
+	   but was 
+	[2, 7, 9, 10] 
+	   difference 
+	[2, *7*, 9, 10, *] 
+	   missing 
+	[3, 15] 
+	  not expected 
+	[7]
 
 ### Updates from the original Shouldly unit test library:
   * Renamed library to ShouldBe to distinguish it from original library.
@@ -88,8 +93,8 @@ If you want to check that a particular call does/does not throw an exception, it
   * All ShouldBe methods return 'actual' so assertions can be chained as a Fluent API.
   * Renamed mock 'Create' class to 'MockMe' to reduce the risk of naming collisions.
     * Added a missing methods to support additional Rhino mock types.
-  * Improved enumeration failure messages to show "missing" and "not expected" lists
-  * Numerous internal unit tests added.
+  * Improved enumeration failure messages to show "missing" and "not expected" lists.
+    * I found ithis was the info I needed when debugging faults in larger lists.
 
 ### Why not just fork Shouldly?
   * We loved the great ideas in Shouldly but in it's current form we found it needed too much adaptation
@@ -122,67 +127,66 @@ If you want to check that a particular call does/does not throw an exception, it
   It also lacks some of the enumeration methods we've added to ShouldBe.
   It inspired me to modify ShouldBe to be fluent.
 
-# Assertion methods
-    * (new) = Not in Shouldly at time of writing. 
+## Assertion methods
 
-    ##Equality
-        ShouldBe<T>
-        ShouldBe<T> (with tolerance)
-        ShouldNotBe<T>
-        ShouldBeGreaterThan(OrEqualTo)<T>
-        ShouldBeLessThan(OrEqualTo)<T>
-        ShouldBeAtLeast<T> (new)
-        ShouldBeAtMost<T> (new)
-        ShouldBeSameAs<T>
+### Equality
+	ShouldBe<T>
+	ShouldBe<T> (with tolerance)
+	ShouldNotBe<T>
+	ShouldBeGreaterThan(OrEqualTo)<T>
+	ShouldBeLessThan(OrEqualTo)<T>
+	ShouldBeAtLeast<T> (new)
+	ShouldBeAtMost<T> (new)
+	ShouldBeSameAs<T>
+
+### Types
+	ShouldBeTypeOf<T>
+	ShouldNotBeTypeOf<T>
+	ShouldBeInstanceOf<T> (new)
+	ShouldNotBeInstanceOf<T> (new)
+	ShouldBeAssignableFrom<T> (new)
+	ShouldNotAssignableFrom<T> (new)
+	ShouldBeAssignableTo<T> (new)
+	ShouldNotAssignableTo<T> (new)
+
+### Enumerable
+	ShouldBeEmpty
+	ShouldNotBeEmpty
+	ShouldBeTheSequence (new)
+	ShouldBeTheSet (new)
+	ShouldHaveUniqueKeys (new)
+	ShouldBeASubsetOf (new)
+	ShouldContainTheSubset (new)
+	ShouldContain
+	ShouldContain(predicate)
+	ShouldContain(tolerance)  (new)
+	ShouldNotContain
+	ShouldNotContain(predicate)
+	ShouldNotContain(tolerance)  (new)		
+
+### String
+	ShouldBeCloseTo
+	ShouldStartWith
+	ShouldEndWith
+	ShouldContain
+	ShouldNotContain
+	ShouldMatch
+	ShouldNotMatch (new)
+
+### Dictionary
+	ShouldContainKeyShouldContainKeyAndValue
+	ShouldNotContainKey
+	ShouldNotContainKeyAndValue
+	ShouldNotContainValueForKey (new)
+
+### Exceptions
+	Should.ThrowException<T>(Action)
+	Should.ThrowExceptionContaining<T>(Action)  (new)
 	
-	##Types
-		ShouldBeTypeOf<T>
-		ShouldNotBeTypeOf<T>
-		ShouldBeInstanceOf<T> (new)
-		ShouldNotBeInstanceOf<T> (new)
-		ShouldBeAssignableFrom<T> (new)
-		ShouldNotAssignableFrom<T> (new)
-		ShouldBeAssignableTo<T> (new)
-		ShouldNotAssignableTo<T> (new)
-
-    ##Enumerable
-        ShouldBeEmpty
-        ShouldNotBeEmpty
-	    ShouldBeTheSequence (new)
-		ShouldBeTheSet (new)
-		ShouldHaveUniqueKeys (new)
-		ShouldBeASubsetOf (new)
-		ShouldContainTheSubset (new)
-        ShouldContain
-        ShouldContain(predicate)
-        ShouldContain(tolerance)  (new)
-        ShouldNotContain
-        ShouldNotContain(predicate)
-        ShouldNotContain(tolerance)  (new)		
-
-    ##String
-        ShouldBeCloseTo
-        ShouldStartWith
-        ShouldEndWith
-        ShouldContain
-        ShouldNotContain
-        ShouldMatch
-        ShouldNotMatch (new)
-
-    ##Dictionary
-        ShouldContainKeyShouldContainKeyAndValue
-        ShouldNotContainKey
-        ShouldNotContainKeyAndValue
-        ShouldNotContainValueForKey (new)
+### Rhino Mocks (Deprecated in Shouldly)
+	ShouldHaveBeenCalled
 	
-    ##Exceptions
-        Should.ThrowException<T>(Action)
-        Should.ThrowExceptionContaining<T>(Action)  (new)
-		
-	##Rhino Mocks (Deprecated in Shouldly)
-		ShouldHaveBeenCalled
-		
-	##Failed  - Use to write your own custom assertions methods.
-		Failed<T>(T expected)   (new)
-		Failed<T>(T actual, T expected)   (new)
-		Failed<T>(IEnumerable<T> actual, expected)   (new)
+### Failed  - Useful in writing your own custom assertions methods.
+	Failed<T>(T expected)   (new)
+	Failed<T>(T actual, T expected)   (new)
+	Failed<T>(IEnumerable<T> actual, expected)   (new)
