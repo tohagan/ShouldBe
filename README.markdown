@@ -10,7 +10,7 @@ https://github.com/tohagan/ShouldBe
 
 *http://shouldly.github.com*
 
-ShouleBe is based on the [Shouldly](http://shouldly.github.com) library. Kudos to [Xerxes Battiwalla](https://github.com/xerxesb) for the original ideas and open source.
+ShouldBe is based on the [Shouldly](http://shouldly.github.com) library. Kudos to [Xerxes Battiwalla](https://github.com/xerxesb) for the original ideas and open source.
 
 *http://should.codeplex.com/*
   
