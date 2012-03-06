@@ -30,6 +30,24 @@ It might be easy to underestimate how useful this is. Another example, side by s
     Assert.That(map.IndexOfValue("boo"), Is.EqualTo(2));    // -> Expected 2 but was 1
     map.IndexOfValue("boo").ShouldBe(2);                    // -> map.IndexOfValue("boo") should be 2 but was 1
 
+It can also compare enumerations:
+
+    new[] { 2, 7, 10, 9 }.ShouldBeTheSet(new[] { 2, 3, 10, 15, 9 }
+
+Outputs:
+
+    new[] { 2, 7, 10, 9 } 
+      should be the set 
+    [2, 3, 9, 10, 15] 
+       but was 
+    [2, 7, 9, 10] 
+       difference 
+    [2, *7*, 9, 10, *] 
+       missing 
+    [3, 15] 
+      not expected 
+    [7]
+
 If you want to check that a particular call does/does not throw an exception, it's as simple as:
 
     Should.ThrowException<ArgumentOutOfRangeException>(() => widget.Twist(-1));
@@ -54,25 +72,6 @@ If you want to check that a particular call does/does not throw an exception, it
 * Uses the name of the assertion method to construct the assertion failure message. 
   The method named "ShouldBeTheSet()" converts to "should be the set" in the final message.
 * Improved enumeration failure messages to show "missing" and "not expected" lists:
-
-
-Assertion:
-
-    new[] { 2, 7, 10, 9 }.ShouldBeTheSet(new[] { 2, 3, 10, 15, 9 }
-
-Outputs:
-
-    new[] { 2, 7, 10, 9 } 
-      should be the set 
-    [2, 3, 9, 10, 15] 
-       but was 
-    [2, 7, 9, 10] 
-       difference 
-    [2, *7*, 9, 10, *] 
-       missing 
-    [3, 15] 
-      not expected 
-    [7]
 
 ### Updates from the original Shouldly library:
 
@@ -116,7 +115,7 @@ Main reasons included:
     * e.g. Is.InRange(IComparable from, IComparable to)
   * Reporting for some conditions (ShouldBeTheSet() and ShouldHaveUniqueKeys() could be improved.  
     * AssertAwesomely().ToString() needs refactoring.  Replace with static methods?
-  * Review NUnit collection methods: http://www.nunit.org/index.php?p=collectionAssert&r=2.5.9
+  * Review [NUnit collection methods](http://www.nunit.org/index.php?p=collectionAssert&r=2.5.9): 
     * Implement: IEnumerable<T> ShouldHaveUniqueValues<T>(this IEnumerable<T> actual) - NUnit: AllItemsAreUnique
     * Implement: IEnumerable<T> ShouldHaveOrderedValues<T>(this IEnumerable<T> actual) - NUnit: IsOrdered
 
