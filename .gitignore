@@ -1,9 +1,6 @@
-
-/bin
-/obj
+*.user
+*.suo
+*.dotCover
+bin
+obj
 /_ReSharper.ShouldBe_2008
-/UnitTests/bin
-/UnitTests/obj
-/ShouldBe_2008.1.1.dotCover
-/ShouldBe_2008.5.1.ReSharper.user
-/ShouldBe_2008.suo
