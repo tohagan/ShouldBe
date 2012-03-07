@@ -13,20 +13,20 @@ namespace ShouldBe
     {
         public static IEnumerable<T> ShouldBeEmpty<T>(this IEnumerable<T> actual)
         {
-            if (actual == null) ShouldBeMessage.Fail(actual);
-            if (actual.Count() > 0)
+            ShouldBeMessage.FailActualIfNull(actual);
+            if (actual.Any())
             {
-                ShouldBeMessage.Fail(actual);
+                ShouldBeMessage.FailActual(actual);
             }
             return actual;
         }
 
         public static IEnumerable<T> ShouldNotBeEmpty<T>(this IEnumerable<T> actual)
         {
-            if (actual == null) ShouldBeMessage.Fail(actual);
-            if (actual.Count() == 0)
+            ShouldBeMessage.FailActualIfNull(actual);
+            if (!actual.Any())
             {
-                ShouldBeMessage.Fail(actual);
+                ShouldBeMessage.FailActual(actual);
             }
             return actual;
         }
@@ -43,6 +43,8 @@ namespace ShouldBe
         ///<typeparam name="T"></typeparam>
         public static IEnumerable<T> ShouldBeTheSequence<T>(this IEnumerable<T> actual, IEnumerable<T> expected)
         {
+            ShouldBeMessage.FailActualIfNull(actual);
+
             T[] actualArray = actual.ToArray();
             T[] expectedArray = expected.ToArray();
 
@@ -76,6 +78,8 @@ namespace ShouldBe
         ///<typeparam name="T"></typeparam>
         public static IEnumerable<T> ShouldBeTheSet<T>(this IEnumerable<T> actual, IEnumerable<T> expected)
         {
+            ShouldBeMessage.FailActualIfNull(actual);
+
             T[] actual1 = actual.ToArray();
             T[] expected1 = expected.ToArray();
 
@@ -105,7 +109,6 @@ namespace ShouldBe
 
         ///<summary>
         /// Assert that the set of values does not contain duplicate keys.
-        /// TODO: Needs a unit test. 
         ///</summary>
         /// <remarks>
         /// Reports duplicate keys and their element values.
@@ -117,12 +120,15 @@ namespace ShouldBe
         public static IEnumerable<T> ShouldHaveUniqueKeys<T, TKey>(this IEnumerable<T> actual, Func<T, TKey> keyFunc)
             where TKey : IComparable
         {
+            // TODO: Needs a unit test.
+ 
+            ShouldBeMessage.FailActualIfNull(actual);
             IGrouping<TKey, T>[] duplicates = actual.GroupBy(keyFunc).Where(g => g.Count() > 1).ToArray();
 
             if (duplicates.Count() > 1)
             {
                 string msg = "  Duplicate Keys:\n" + duplicates.Select(d => d.Key.Inspect() + " -> " + d.Inspect()).DelimitWith("\n");
-                Assert.Fail(ShouldBeMessage.GetMessage(actual) + "\n" + msg);
+                Assert.Fail(ShouldBeMessage.GetMessageActual(actual) + "\n" + msg);
             }
 
             return actual;
@@ -141,6 +147,7 @@ namespace ShouldBe
         ///<typeparam name="T"></typeparam>
         public static IEnumerable<T> ShouldBeASubsetOf<T>(this IEnumerable<T> actual, IEnumerable<T> superset)
         {
+            ShouldBeMessage.FailActualIfNull(actual);
             return actual.AssertAwesomely(Is.SubsetOf(superset), actual, superset);
         }
 
@@ -153,13 +160,13 @@ namespace ShouldBe
         ///<typeparam name="T"></typeparam>
         public static IEnumerable<T> ShouldContainTheSubset<T>(this IEnumerable<T> actual, IEnumerable<T> subset)
         {
+            ShouldBeMessage.FailActualIfNull(actual);
             return subset.AssertAwesomely(Is.SubsetOf(actual), actual, subset);
         }
 
         public static IEnumerable<T> ShouldContain<T>(this IEnumerable<T> actual, T expected)
         {
-            if (actual == null) ShouldBeMessage.Fail(actual, expected);
-
+            ShouldBeMessage.FailActualIfNull(actual);
             if (!actual.Contains(expected))
             {
                 ShouldBeMessage.Fail(actual, expected);
@@ -169,7 +176,8 @@ namespace ShouldBe
 
         public static IEnumerable<T> ShouldNotContain<T>(this IEnumerable<T> actual, T expected)
         {
-            if (actual == null) ShouldBeMessage.Fail(actual, expected);
+            ShouldBeMessage.FailActualIfNull(actual);
+
             if (actual.Contains(expected))
             {
                 ShouldBeMessage.Fail(actual, expected);
@@ -179,63 +187,106 @@ namespace ShouldBe
 
         public static IEnumerable<T> ShouldContain<T>(this IEnumerable<T> actual, Expression<Func<T, bool>> elementPredicate)
         {
-            if (actual == null) ShouldBeMessage.Fail(actual);
+            ShouldBeMessage.FailActualIfNull(actual);
 
             var condition = elementPredicate.Compile();
             if (!actual.Any(condition))
             {
-                ShouldBeMessage.Fail(elementPredicate.Body);
+                ShouldBeMessage.FailExpectingElement(elementPredicate.Body);
             }
             return actual;
         }
 
         public static IEnumerable<T> ShouldNotContain<T>(this IEnumerable<T> actual, Expression<Func<T, bool>> elementPredicate)
         {
-            if (actual == null) ShouldBeMessage.Fail(actual);
+            ShouldBeMessage.FailActualIfNull(actual);
 
             var condition = elementPredicate.Compile();
             if (actual.Any(condition))
             {
-                ShouldBeMessage.Fail(elementPredicate.Body);
+                ShouldBeMessage.FailExpectingElement(elementPredicate.Body);
             }
             return actual;
         }
 
         #region ShouldContain with tolerance (numeric overloads)
+
         public static IEnumerable<float> ShouldContain(this IEnumerable<float> actual, float expected, float tolerance)
         {
-            return actual.ShouldContain(a => Math.Abs(expected - a) < tolerance);
+            ShouldBeMessage.FailActualIfNull(actual);
+
+            if (!actual.Any(a => Math.Abs(expected - a) < tolerance))
+            {
+                ShouldBeMessage.Fail(actual, expected, tolerance);
+            }
+            return actual;
         }
 
         public static IEnumerable<double> ShouldContain(this IEnumerable<double> actual, double expected, double tolerance)
         {
-            return actual.ShouldContain(a => Math.Abs(expected - a) < tolerance);
+            ShouldBeMessage.FailActualIfNull(actual);
+
+            if (!actual.Any(a => Math.Abs(expected - a) < tolerance))
+            {
+                ShouldBeMessage.Fail(actual, expected, tolerance);
+            }
+            return actual;
         }
 
-        public static IEnumerable<sbyte> ShouldContain(this IEnumerable<sbyte> actual, sbyte expected, sbyte tolerance)
-        {
-            return actual.ShouldContain(a => Math.Abs(expected - a) < tolerance);
-        }
+        //public static IEnumerable<sbyte> ShouldContain(this IEnumerable<sbyte> actual, sbyte expected, sbyte tolerance)
+        //{
+        //    ShouldBeMessage.FailActualIfNull(actual);
 
-        public static IEnumerable<short> ShouldContain(this IEnumerable<short> actual, short expected, short tolerance)
-        {
-            return actual.ShouldContain(a => Math.Abs(expected - a) < tolerance);
-        }
+        //    if (actual.Any(a => Math.Abs(expected - a) < tolerance))
+        //    {
+        //        ShouldBeMessage.Fail(actual, expected, tolerance);
+        //    }
+        //    return actual;
+        //}
 
-        public static IEnumerable<int> ShouldContain(this IEnumerable<int> actual, int expected, int tolerance)
-        {
-            return actual.ShouldContain(a => Math.Abs(expected - a) < tolerance);
-        }
+        //public static IEnumerable<short> ShouldContain(this IEnumerable<short> actual, short expected, short tolerance)
+        //{
+        //    ShouldBeMessage.FailActualIfNull(actual);
 
-        public static IEnumerable<long> ShouldContain(this IEnumerable<long> actual, long expected, long tolerance)
-        {
-            return actual.ShouldContain(a => Math.Abs(expected - a) < tolerance);
-        }
+        //    if (actual.Any(a => Math.Abs(expected - a) < tolerance))
+        //    {
+        //        ShouldBeMessage.Fail(actual, expected, tolerance);
+        //    }
+        //    return actual;
+        //}
 
-        public static IEnumerable<Decimal> ShouldContain(this IEnumerable<Decimal> actual, Decimal expected, Decimal tolerance)
-        {
-            return actual.ShouldContain(a => Math.Abs(expected - a) < tolerance);
-        }
+        //public static IEnumerable<int> ShouldContain(this IEnumerable<int> actual, int expected, int tolerance)
+        //{
+        //    ShouldBeMessage.FailActualIfNull(actual);
+
+        //    if (actual.Any(a => Math.Abs(expected - a) < tolerance))
+        //    {
+        //        ShouldBeMessage.Fail(actual, expected, tolerance);
+        //    }
+        //    return actual;
+        //}
+
+        //public static IEnumerable<long> ShouldContain(this IEnumerable<long> actual, long expected, long tolerance)
+        //{
+        //    ShouldBeMessage.FailActualIfNull(actual);
+
+        //    if (actual.Any(a => Math.Abs(expected - a) < tolerance))
+        //    {
+        //        ShouldBeMessage.Fail(actual, expected, tolerance);
+        //    }
+        //    return actual;
+        //}
+
+        //public static IEnumerable<Decimal> ShouldContain(this IEnumerable<Decimal> actual, Decimal expected, Decimal tolerance)
+        //{
+        //    ShouldBeMessage.FailActualIfNull(actual);
+
+        //    if (actual.Any(a => Math.Abs(expected - a) < tolerance))
+        //    {
+        //        ShouldBeMessage.Fail(actual, expected, tolerance);
+        //    }
+        //    return actual;
+        //}
         #endregion
 
         #region ShouldNotContain with tolerance (numeric overloads)

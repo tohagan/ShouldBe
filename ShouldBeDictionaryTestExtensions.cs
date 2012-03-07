@@ -12,7 +12,7 @@ namespace ShouldBe
         {
             if (!dictionary.ContainsKey(key))
             {
-                ShouldBeMessage.Fail(key.Inspect());
+                ShouldBeMessage.FailExpecting(key);
             }
             return dictionary;
         }
@@ -21,7 +21,7 @@ namespace ShouldBe
         {
             if (!dictionary.ContainsKey(key) || !dictionary[key].Equals(val))
             {
-                ShouldBeMessage.Fail(string.Format(@"{{key: {0}, val: {1}}}", key.Inspect(), val.Inspect()));
+                ShouldBeMessage.FailExpectingFormatted(string.Format(@"{{key: {0}, val: {1}}}", key.Inspect(), val.Inspect()));
             }
             return dictionary;
         }
@@ -30,7 +30,7 @@ namespace ShouldBe
         {
             if (dictionary.ContainsKey(key))
             {
-                ShouldBeMessage.Fail(key.Inspect());
+                ShouldBeMessage.FailExpecting(key);
             }
             return dictionary;
         }
@@ -41,7 +41,7 @@ namespace ShouldBe
 
             if (dictionary[key].Equals(val))
             {
-                ShouldBeMessage.Fail(string.Format(@"{{key: {0}, val: {1}}}", key.Inspect(), val.Inspect()));
+                ShouldBeMessage.FailExpectingFormatted(string.Format(@"{{key: {0}, val: {1}}}", key.Inspect(), val.Inspect()));
             }
 
             return dictionary;

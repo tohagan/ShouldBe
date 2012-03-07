@@ -9,10 +9,10 @@ namespace ShouldBe.UnitTests
     /// Unit test the unit test's helper class method <see cref="TestHelper.ShouldFailWithError"/>.
     /// </summary>
     [TestFixture]
-    public class ShouldErrorTests
+    public class ShouldFailWithErrorTests
     {
         [Test]
-        public void ShouldError_ShouldFail_WhenActionSucceeds()
+        public void ShouldFailWithError_ShouldFail_WhenActionSucceeds()
         {
             string expectedMessage = "'blah de blah'";
             try
@@ -23,7 +23,7 @@ namespace ShouldBe.UnitTests
             }
             catch (AssertionException ex)
             {
-                string expected = string.Format("Should fail with error\n{0}\n    but succeeded.", expectedMessage);
+                string expected = string.Format("Should fail with error\n{0}\n    BUT IT SUCCEEDED.", expectedMessage);
                 Assert.That(ex.Message, Is.EqualTo(expected));
                 return;
             }
@@ -32,7 +32,7 @@ namespace ShouldBe.UnitTests
         }
 
         [Test]
-        public void ShouldError_ShouldFail_WhenExpectedMessageDoesNotMatch()
+        public void ShouldFailWithError_ShouldFail_WhenExpectedMessageDoesNotMatch()
         {
             try
             {
@@ -50,7 +50,7 @@ namespace ShouldBe.UnitTests
 
 
         [Test]
-        public void ShouldError_ShouldSucceed_WhenExpectedMessageMatchesClosely()
+        public void ShouldFailWithError_ShouldSucceed_WhenExpectedMessageMatchesClosely()
         {
             TestHelper.ShouldFailWithError(() =>
                          "xyz".ShouldBe("pqr"),
@@ -58,7 +58,7 @@ namespace ShouldBe.UnitTests
         }
 
         [Test]
-        public void ShouldError_ShouldSucceed_WhenExpectedMessageMatchesExactly()
+        public void ShouldFailWithError_ShouldSucceed_WhenExpectedMessageMatchesExactly()
         {
             TestHelper.ShouldFailWithError(() =>
                          "xyz".ShouldBe("pqr"),

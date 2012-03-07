@@ -24,35 +24,19 @@ namespace ShouldBe.UnitTests
             catch (AssertionException ex)
             {
                 var actualError = ex.Message;
-                var strippedActual = actualError.StripWhitespace();
                 var strippedExpected = expectedError.StripWhitespace();
+                var strippedActual = actualError.StripWhitespace();
 
                 if (strippedActual.Contains(strippedExpected)) return;
 
                 Assert.Fail(string.Format(
-                    "Should fail with error\n{0}\n    but error was\n{1}\n",
-                    expectedError, actualError));
+                    "Should fail with error\n{0}:{1}\n    BUT THE ERROR WAS\n{2}:{3}\n",
+                    strippedExpected.Length, strippedExpected, strippedActual.Length, strippedActual));
             }
 
             Assert.Fail(string.Format(
-                "Should fail with error\n{0}\n    but succeeded.",
+                "Should fail with error\n{0}\n    BUT IT SUCCEEDED.",
                 expectedError));
-        }
-
-        /// <summary>
-        /// Asserts that an action will fail with a specific error.
-        /// </summary>
-        /// <param name="action"></param>
-        public static void ShouldNotFail(Action action)
-        {
-            try
-            {
-                action();
-            }
-            catch (Exception ex)
-            {
-                ShouldBeMessage.Fail(ex.GetType());
-            }
         }
     }
 }

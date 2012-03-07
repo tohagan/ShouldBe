@@ -54,7 +54,7 @@ namespace ShouldBe.DifferenceHighlighting
 
         private string HighlightDifferencesBetweenLists(IEnumerable<object> actualList, IEnumerable<object> expectedList, int highestListCount)
         {
-            var returnMessage = new StringBuilder("[");
+            var returnMessage = new StringBuilder("{");
 
             for (var listItem = 0; listItem < highestListCount; listItem++)
             {
@@ -72,7 +72,7 @@ namespace ShouldBe.DifferenceHighlighting
                 }
             }
 
-            return returnMessage.Append("]").ToString();
+            return returnMessage.Append("}").ToString();
         }
 
         private string GetComparedItemString(IEnumerable<object> actualList, IEnumerable<object> expectedList, int itemPosition)

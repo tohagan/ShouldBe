@@ -18,16 +18,47 @@ namespace ShouldBe
         public int LineNumber { get; set; }
     }
 
+    /// <summary>
+    /// Helper class for creating assertion failure messages
+    /// </summary>
     public class ShouldBeMessage
     {
-        public static void Fail<T>(T expected)
+        public static void FailActualIfNull<T>(T actual)
         {
-            Assert.Fail(GetMessage(expected));
+            if (actual == null)
+            {
+                Assert.Fail(GetMessageActualIsNull());
+            }
+        }
+
+        public static void FailActual<T>(T actual)
+        {
+            Assert.Fail(GetMessageActual(actual));
+        }
+
+        public static void FailExpecting<T>(T expected)
+        {
+            Assert.Fail(GetMessageExpecting(expected));
+        }
+
+        public static void FailExpectingElement<T>(T expectedElement)
+        {
+            Assert.Fail(GetMessageExpectingElement(expectedElement));
+        }
+
+        public static void FailExpectingFormatted(string expected)
+        {
+            Assert.Fail(GetMessageExpectingFormatted(expected));
         }
 
         public static void Fail<T>(T actual, T expected)
         {
             Assert.Fail(GetMessage(actual, expected));
+        }
+
+        public static void Fail<T>(IEnumerable<T> actual, T expected, T tolerance)
+        {
+            Assert.Fail(GetMessageWithTolerance(actual, expected, tolerance));
         }
 
         public static void Fail<T>(IEnumerable<T> actual, T expected)
@@ -49,15 +80,49 @@ namespace ShouldBe
             return message;
         }
 
-        public static string GetMessage<T>(T expected)
+        public static string GetMessageWithTolerance<T>(IEnumerable<T> actual, T expected, T tolerance)
         {
-            return string.Format("{0} {1}\n    {2}",
-                GetContext(),
-                expected is BinaryExpression ? "an element satisfying the condition" : "", 
-                expected);
+            return string.Format("{0}\n    {1} (+/- {2})\n        but was\n    {3}",
+                GetContext(), expected, tolerance, actual.Inspect());
+        }
+        
+        public static string GetMessageActual<T>(T actual)
+        {
+            string context = GetContext();
+            return string.Format("{0} but was\n    {1}", context, actual.Inspect());
+        }
+
+        public static string GetMessageActualIsNull()
+        {
+            string context = GetContext(true);
+            return string.Format("{0} should not be null", context);
+        }
+
+        public static string GetMessageExpecting<T>(T expected)
+        {
+            string context = GetContext();
+            return string.Format("{0}\n    {1}", context, expected.Inspect());
+        }
+
+        public static string GetMessageExpectingFormatted(string expected)
+        {
+            string context = GetContext();
+            return string.Format("{0}\n    {1}", context, expected);
+        }
+
+        public static string GetMessageExpectingElement<T>(T expectedElement)
+        {
+            string context = GetContext();
+            return string.Format("{0} an element satisfying the condition\n    {1}",
+                context, expectedElement.Inspect());
         }
 
         private static string GetContext()
+        {
+            return GetContext(false);
+        }
+
+        private static string GetContext(bool codeOnly)
         {
             var environment = GetStackFrameForOriginatingTestMethod();
             var codePart = "The provided expression";
@@ -76,31 +141,39 @@ namespace ShouldBe
                 if (codePart.StartsWith("() => ")) codePart = codePart.Substring(6);
             }
 
-            return string.Format("{0}\n  {1}", codePart, environment.ShouldMethod.PascalToSpaced());
+            if (codeOnly)
+            {
+                return codePart;
+            }
+            else
+            {
+                return string.Format("{0}\n  {1}", codePart, environment.ShouldMethod.PascalToSpaced());
+            }
         }
 
         private static TestEnvironment GetStackFrameForOriginatingTestMethod()
         {
             var stackTrace = new StackTrace(true);
             var i = 0;
-            var shouldlyFrame = stackTrace.GetFrame(i);
-            if (shouldlyFrame == null) throw new Exception("Unable to find test method");
+            var shouldbeFrame = stackTrace.GetFrame(i);
+            if (shouldbeFrame == null) throw new Exception("Unable to find test method");
 
-            while (!shouldlyFrame.GetMethod().DeclaringType.GetCustomAttributes(typeof(ShouldBeMethodsAttribute), true).Any())
+            while (!shouldbeFrame.GetMethod().DeclaringType.GetCustomAttributes(typeof(ShouldBeMethodsAttribute), true).Any())
             {
-                shouldlyFrame = stackTrace.GetFrame(++i);
+                shouldbeFrame = stackTrace.GetFrame(++i);
             }
+
             var originatingFrame = stackTrace.GetFrame(i+1);
 
             string sourceFile = originatingFrame.GetFileName();
 
             return new TestEnvironment
-                       {
-                           CanReadSourceCode = sourceFile != null && File.Exists(sourceFile),
-                           ShouldMethod = shouldlyFrame.GetMethod().Name,
-                           FileName = sourceFile,
-                           LineNumber = originatingFrame.GetFileLineNumber() - 1
-                       };
+                {
+                    CanReadSourceCode = sourceFile != null && File.Exists(sourceFile),
+                    ShouldMethod = shouldbeFrame.GetMethod().Name,
+                    FileName = sourceFile,
+                    LineNumber = originatingFrame.GetFileLineNumber() - 1
+                };
         }
     }
 }

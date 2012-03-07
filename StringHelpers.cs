@@ -33,10 +33,14 @@ namespace ShouldBe
             if (value is string)
                 return "\"" + value + "\"";
 
+            // bool.ToString() returns "True" or "False" which is not c# code.
+            if (value is bool)
+                return value.As<bool>() ? "true" : "false";
+
             if (value is IEnumerable)
             {
                 var objects = Enumerable.Cast<object>(value.As<IEnumerable>());
-                return "[" + objects.Select(o => o.Inspect()).CommaDelimited() + "]";
+                return "{" + objects.Select(o => o.Inspect()).CommaDelimited() + "}";
             }
 
             if (value is Enum)
