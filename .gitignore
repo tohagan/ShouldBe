@@ -4,3 +4,5 @@
 bin
 obj
 /_ReSharper.ShouldBe_2008
+
+/lib/nunit
