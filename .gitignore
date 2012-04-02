@@ -3,6 +3,6 @@
 *.dotCover
 bin
 obj
-/_ReSharper.ShouldBe_2008
+/_ReSharper.*
 /Releases
 /lib/nunit
