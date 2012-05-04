@@ -3,7 +3,7 @@ https://github.com/tohagan/ShouldBe
 ### About
 
 * A cleaner *faster* way to code .NET / C# / VB.NET unit tests.
-* Wrapper API for NUnit so it integrates well with existing NUnit tools like Resharper
+* Wrapper API for NUnit so it integrates well with existing NUnit tools like NUnit Runners and Resharper.
 * **License**: BSD Open Source  (See LICENSE.txt)
 
 ### Similar Libraries
