@@ -23,7 +23,7 @@ namespace ShouldBe.UnitTests
             }
             catch (AssertionException ex)
             {
-                string expected = string.Format("Should fail with error\n{0}\n    BUT IT SUCCEEDED.", expectedMessage);
+                string expected = string.Format("Should fail with error\n{0}\n    but it succeeded.", expectedMessage);
                 Assert.That(ex.Message, Is.EqualTo(expected));
                 return;
             }
