@@ -209,6 +209,72 @@ namespace ShouldBe
             return actual;
         }
 
+        #region Ascending/ Descending
+        public static IEnumerable<T> ShouldBeAscending<T>(this IEnumerable<T> actual)
+            where T : IComparable
+        {
+            ShouldBeMessage.FailActualIfNull(actual);
+
+            T[] actualArray = actual.ToArray();
+            T[] expectedArray = actual.OrderBy(o => o).ToArray();
+
+            for (int i = 0; i < actualArray.Length && i < expectedArray.Length; i++)
+            {
+                actualArray[i].AssertAwesomely(Is.EqualTo(expectedArray[i]), actualArray, expectedArray);
+            }
+
+            return actual;
+        }
+
+        public static IEnumerable<T> ShouldBeAscending<T>(this IEnumerable<T> actual, IComparer<T> comparer)
+        {
+            comparer.ShouldNotBe(null);
+            ShouldBeMessage.FailActualIfNull(actual);
+
+            T[] actualArray = actual.ToArray();
+            T[] expectedArray = actual.OrderBy(o => o, comparer).ToArray();
+
+            for (int i = 0; i < actualArray.Length && i < expectedArray.Length; i++)
+            {
+                actualArray[i].AssertAwesomely(Is.EqualTo(expectedArray[i]), actualArray, expectedArray);
+            }
+
+            return actual;
+        }
+
+        public static IEnumerable<T> ShouldBeDescending<T>(this IEnumerable<T> actual)
+            where T : IComparable
+        {
+            ShouldBeMessage.FailActualIfNull(actual);
+
+            T[] actualArray = actual.ToArray();
+            T[] expectedArray = actual.OrderByDescending(o => o).ToArray();
+
+            for (int i = 0; i < actualArray.Length && i < expectedArray.Length; i++)
+            {
+                actualArray[i].AssertAwesomely(Is.EqualTo(expectedArray[i]), actualArray, expectedArray);
+            }
+
+            return actual;
+        }
+
+        public static IEnumerable<T> ShouldBeDescending<T>(this IEnumerable<T> actual, IComparer<T> comparer)
+        {
+            comparer.ShouldNotBe(null);
+            ShouldBeMessage.FailActualIfNull(actual);
+
+            T[] actualArray = actual.ToArray();
+            T[] expectedArray = actual.OrderByDescending(o => o, comparer).ToArray();
+
+            for (int i = 0; i < actualArray.Length && i < expectedArray.Length; i++)
+            {
+                actualArray[i].AssertAwesomely(Is.EqualTo(expectedArray[i]), actualArray, expectedArray);
+            }
+
+            return actual;
+        }
+        #endregion
+
         #region ShouldContain with tolerance (numeric overloads)
 
         public static IEnumerable<float> ShouldContain(this IEnumerable<float> actual, float expected, float tolerance)

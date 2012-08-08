@@ -3,6 +3,9 @@ using NUnit.Framework;
 
 namespace ShouldBe.UnitTests
 {
+    /// <summary>
+    /// Used internally to assist in testing assertions
+    /// </summary>
     [ShouldBeMethods]
     public static class TestHelper
     {

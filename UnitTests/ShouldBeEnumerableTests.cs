@@ -162,9 +162,17 @@ namespace ShouldBe.UnitTests
         }
 
         [Test]
+        public void ShouldBeTheSet_WithMatchingEnumElementsInMixedOrder_ShouldSucceed()
+        {
+            var actual = new[] { "ABC", "DEF", "GHI", "JKI", "LMN", "OPQ" };
+            var expected = new[] { "LMN", "GHI", "OPQ", "ABC", "DEF", "JKI" };
+            actual.ShouldBeTheSet(expected);
+        }
+
+        [Test]
         public void ShouldBeTheSet_WithAddedAndRemovedElements_ShouldFailWithMessage()
         {
-            TestHelper.ShouldFailWithError(() => 
+            TestHelper.ShouldFailWithError(() =>
                 new[] { 2, 7, 10, 9 }.ShouldBeTheSet(new[] { 2, 3, 10, 15, 9 }),
                 @"new[] { 2, 7, 10, 9 } should be the set {2, 3, 9, 10, 15} but was {2, 7, 9, 10} difference {2, *7*, 9, 10, *} missing {3, 15} not expected {7}");
         }
@@ -182,6 +190,46 @@ namespace ShouldBe.UnitTests
         public void TestShouldBeASupersetOf()
         {
             // TODO: Unit test for ShouldBeASupersetOf()
+        }
+
+        [Test]
+        public void TestShouldBeAscending_WithAscendingValues_ShouldSucceed()
+        {
+            new[] { "ABC", "DEF", "GHI", "JKI", "LMN", "OPQ" }.ShouldBeAscending();
+            new string[] { }.ShouldBeAscending();
+        }
+
+        [Test]
+        public void TestShouldBeAscending_WithNonAscendingValues_ShouldFail()
+        {
+            TestHelper.ShouldFailWithError(() =>
+                new[] { 1, 4, 2, 2, 5 }.ShouldBeAscending(),
+                @"new[] { 1, 4, 2, 2, 5 } should be ascending {1, 2, 2, 4, 5} but was {1, 4, 2, 2, 5} difference {1, *4*, 2, *2*, 5}");
+        }
+
+        [Test]
+        public void TestShouldBeDescending_WithDescendingValues_ShouldSucceed()
+        {
+            new[] { 10, 9, 6, 5, 3, -1 }.ShouldBeDescending();
+            new string[] { }.ShouldBeDescending();
+        }
+
+        [Test]
+        public void TestShouldBeDescending_WithNonDescendingValues_ShouldFail()
+        {
+            TestHelper.ShouldFailWithError(() =>
+                new[] { 10, 6, 10, 5, 3, -1 }.ShouldBeDescending(),
+                @"new[] { 10, 6, 10, 5, 3, -1 } should be descending {10, 10, 6, 5, 3, -1} but was {10, 6, 10, 5, 3, -1} difference {10, *6*, *10*, 5, 3, -1}");
+        }
+
+        public void TestShouldBeAscendingWithComparer()
+        {
+            // TODO: Unit test for ShouldBeAscending() with comparer
+        }
+
+        public void TestShouldBeDescendingWithComparer()
+        {
+            // TODO: Unit test for ShouldBeDescending() with comparer
         }
     }
 }
