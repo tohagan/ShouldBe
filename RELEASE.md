@@ -7,6 +7,15 @@
 * Rhino Mocks - Tested with Rhino Mocks 3.6.0.0
 
 ---
+### v1.0.2 Release  09-AUG-2012
+* Added missing API documentation
+* Added Enumerable&lt;T&gt; assertions (unit tested)
+ * ShouldBeAscending
+ * ShouldBeAscending(keySelector)
+ * ShouldBeDescending 
+ * ShouldBeDescending(keySelector)
+
+---
 ### v1.0.1 Release  07-MAR-2012
 
 * Fixed enumeration tolerance assertions.

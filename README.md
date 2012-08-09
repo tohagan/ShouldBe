@@ -107,7 +107,7 @@ If you want to check that a particular call does/does not throw an exception, it
     * Very useful when debugging faults in larger lists.
 	* Truncates large lists
 
-*Breaking changes:*
+*Breaking changes from Shouldly lib:*
 
   * Removed case insensitive matching in ShouldStartWith() and ShouldContain() methods.
     * A risky design in our view that could cause unit tests to unexpectedly succeed 
@@ -174,7 +174,11 @@ Main reasons included:
     ShouldContain(tolerance)  (new)
     ShouldNotContain
     ShouldNotContain(predicate)
-    ShouldNotContain(tolerance)  (new)        
+    ShouldNotContain(tolerance)  (new) 
+    ShouldBeAscending (new)       
+    ShouldBeAscending(keySelector) (new)       
+    ShouldBeDescending (new)       
+    ShouldBeDescending(keySelector) (new)       
 
 ### String
     ShouldBeCloseTo
@@ -198,8 +202,3 @@ Main reasons included:
 
 ### Rhino Mocks (Deprecated in Shouldly)
     ShouldHaveBeenCalled
-
-### Failed  - Useful in writing your own custom assertions methods.
-    Failed<T>(T expected)   (new)
-    Failed<T>(T actual, T expected)   (new)
-    Failed<T>(IEnumerable<T> actual, expected)   (new)
