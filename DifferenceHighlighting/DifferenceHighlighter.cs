@@ -1,10 +1,10 @@
 namespace ShouldBe.DifferenceHighlighting
 {
-    public class DifferenceHighlighter
+    internal class DifferenceHighlighter
     {
-        public const string HighlightCharacter = "*";
+        internal const string HighlightCharacter = "*";
 
-        public string HighlightItem(string item)
+        internal string HighlightItem(string item)
         {
             return HighlightCharacter + item + HighlightCharacter;
         }

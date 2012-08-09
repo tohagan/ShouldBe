@@ -22,7 +22,7 @@ namespace ShouldBe
         }
 
         /// <summary>
-        /// 
+        /// Asserts that a string starts with the <paramref name="startWith"/> substring.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="startsWith"></param>
@@ -33,7 +33,7 @@ namespace ShouldBe
         }
 
         /// <summary>
-        /// 
+        /// Asserts that a string ends with the <paramref name="endsWith"/> substring.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="endsWith"></param>
@@ -44,7 +44,7 @@ namespace ShouldBe
         }
 
         /// <summary>
-        /// 
+        /// Asserts that a string contains a given substring.  Matching is case sensitive.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="contains"></param>
@@ -55,7 +55,7 @@ namespace ShouldBe
         }
 
         /// <summary>
-        /// 
+        /// Asserts that a string does not contains a given substring.  Matching is case sensitive.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="notContains"></param>
@@ -66,7 +66,7 @@ namespace ShouldBe
         }
 
         /// <summary>
-        /// 
+        /// Asserts that a string matches a regular expression.
         /// </summary>
         /// <param name="actual"></param>
         /// <param name="regexPattern"></param>
@@ -77,7 +77,7 @@ namespace ShouldBe
         }
 
         /// <summary>
-        /// 
+        /// Asserts that a string does not match a regular expression.
         /// </summary>
         /// <param name="actual"></param>
         /// <param name="regexPattern"></param>

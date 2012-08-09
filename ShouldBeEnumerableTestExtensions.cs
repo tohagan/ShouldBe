@@ -164,6 +164,13 @@ namespace ShouldBe
             return subset.AssertAwesomely(Is.SubsetOf(actual), actual, subset);
         }
 
+        /// <summary>
+        /// Asserts that an element is contained in the IEnumerable{T} sequence.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="actual"></param>
+        /// <param name="expected"></param>
+        /// <returns></returns>
         public static IEnumerable<T> ShouldContain<T>(this IEnumerable<T> actual, T expected)
         {
             ShouldBeMessage.FailActualIfNull(actual);
@@ -174,6 +181,13 @@ namespace ShouldBe
             return actual;
         }
 
+        /// <summary>
+        /// Asserts that an element is not contained in the IEnumerable{T} sequence.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="actual"></param>
+        /// <param name="expected"></param>
+        /// <returns></returns>
         public static IEnumerable<T> ShouldNotContain<T>(this IEnumerable<T> actual, T expected)
         {
             ShouldBeMessage.FailActualIfNull(actual);
@@ -185,6 +199,13 @@ namespace ShouldBe
             return actual;
         }
 
+        /// <summary>
+        /// Asserts that at least one element in the IEnumerable{T} sequence fulfills the <param name="elementPredicate"/> assertion.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="actual"></param>
+        /// <param name="elementPredicate"></param>
+        /// <returns></returns>
         public static IEnumerable<T> ShouldContain<T>(this IEnumerable<T> actual, Expression<Func<T, bool>> elementPredicate)
         {
             ShouldBeMessage.FailActualIfNull(actual);
@@ -197,6 +218,13 @@ namespace ShouldBe
             return actual;
         }
 
+        /// <summary>
+        /// Asserts that none of the elements in the IEnumerable{T} sequence fulfills the <param name="elementPredicate"/> assertion.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="actual"></param>
+        /// <param name="elementPredicate"></param>
+        /// <returns></returns>
         public static IEnumerable<T> ShouldNotContain<T>(this IEnumerable<T> actual, Expression<Func<T, bool>> elementPredicate)
         {
             ShouldBeMessage.FailActualIfNull(actual);
@@ -210,6 +238,13 @@ namespace ShouldBe
         }
 
         #region Ascending/ Descending
+
+        /// <summary>
+        /// Asserts that the elements in the IEnumerable{T} sequence are in ascending order.
+        /// </summary>
+        /// <typeparam name="T">Elements must implement <see cref="IComparable"/>.</typeparam>
+        /// <param name="actual"></param>
+        /// <returns></returns>
         public static IEnumerable<T> ShouldBeAscending<T>(this IEnumerable<T> actual)
             where T : IComparable
         {
@@ -226,13 +261,22 @@ namespace ShouldBe
             return actual;
         }
 
-        public static IEnumerable<T> ShouldBeAscending<T>(this IEnumerable<T> actual, IComparer<T> comparer)
+        /// <summary>
+        /// Asserts that the keys selected by the <paramref name="keySelector"/> function from elements in IEnumerable{TElem} in are in ascending order.
+        /// </summary>
+        /// <typeparam name="TElem"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <param name="actual"></param>
+        /// <param name="keySelector">Maps an element to an ordering key</param>
+        /// <returns></returns>
+        public static IEnumerable<TElem> ShouldBeAscending<TElem, TKey>(this IEnumerable<TElem> actual, Func<TElem, TKey> keySelector)
+            where TKey : IComparable
         {
-            comparer.ShouldNotBe(null);
+            keySelector.ShouldNotBe(null);
             ShouldBeMessage.FailActualIfNull(actual);
 
-            T[] actualArray = actual.ToArray();
-            T[] expectedArray = actual.OrderBy(o => o, comparer).ToArray();
+            TElem[] actualArray = actual.ToArray();
+            TElem[] expectedArray = actual.OrderBy(keySelector).ToArray();
 
             for (int i = 0; i < actualArray.Length && i < expectedArray.Length; i++)
             {
@@ -242,6 +286,12 @@ namespace ShouldBe
             return actual;
         }
 
+        /// <summary>
+        /// Asserts that the elements in the IEnumerable{T} sequence are in descending order.
+        /// </summary>
+        /// <typeparam name="T">Elements must implement <see cref="IComparable"/>.</typeparam>
+        /// <param name="actual"></param>
+        /// <returns></returns>
         public static IEnumerable<T> ShouldBeDescending<T>(this IEnumerable<T> actual)
             where T : IComparable
         {
@@ -258,13 +308,22 @@ namespace ShouldBe
             return actual;
         }
 
-        public static IEnumerable<T> ShouldBeDescending<T>(this IEnumerable<T> actual, IComparer<T> comparer)
+        /// <summary>
+        /// Asserts that the keys selected by the <paramref name="keySelector"/> function from elements in IEnumerable{TElem} in are in descending order.
+        /// </summary>
+        /// <typeparam name="TElem">Element type</typeparam>
+        /// <typeparam name="TKey">Key type. Must implement <see cref="IComparable"/></typeparam>
+        /// <param name="actual"></param>
+        /// <param name="keySelector">Maps an element to an ordering key</param>
+        /// <returns></returns>
+        public static IEnumerable<TElem> ShouldBeDescending<TElem, TKey>(this IEnumerable<TElem> actual, Func<TElem, TKey> keySelector)
+            where TKey : IComparable
         {
-            comparer.ShouldNotBe(null);
+            keySelector.ShouldNotBe(null);
             ShouldBeMessage.FailActualIfNull(actual);
 
-            T[] actualArray = actual.ToArray();
-            T[] expectedArray = actual.OrderByDescending(o => o, comparer).ToArray();
+            TElem[] actualArray = actual.ToArray();
+            TElem[] expectedArray = actual.OrderByDescending(keySelector).ToArray();
 
             for (int i = 0; i < actualArray.Length && i < expectedArray.Length; i++)
             {
@@ -277,6 +336,13 @@ namespace ShouldBe
 
         #region ShouldContain with tolerance (numeric overloads)
 
+        /// <summary>
+        /// Asserts that an floating point element exists in the IEnumerable{T} sequence that is equal to <paramref name="expected"/> within a given <paramref name="tolerance"/> value.
+        /// </summary>
+        /// <param name="actual"></param>
+        /// <param name="expected"></param>
+        /// <param name="tolerance"></param>
+        /// <returns></returns>
         public static IEnumerable<float> ShouldContain(this IEnumerable<float> actual, float expected, float tolerance)
         {
             ShouldBeMessage.FailActualIfNull(actual);
@@ -288,6 +354,13 @@ namespace ShouldBe
             return actual;
         }
 
+        /// <summary>
+        /// Asserts that an double precision floating point element exists in the IEnumerable{T} sequence that is equal to <paramref name="expected"/> within a given <paramref name="tolerance"/> value.
+        /// </summary>
+        /// <param name="actual"></param>
+        /// <param name="expected"></param>
+        /// <param name="tolerance"></param>
+        /// <returns></returns>
         public static IEnumerable<double> ShouldContain(this IEnumerable<double> actual, double expected, double tolerance)
         {
             ShouldBeMessage.FailActualIfNull(actual);
@@ -343,16 +416,23 @@ namespace ShouldBe
         //    return actual;
         //}
 
-        //public static IEnumerable<Decimal> ShouldContain(this IEnumerable<Decimal> actual, Decimal expected, Decimal tolerance)
-        //{
-        //    ShouldBeMessage.FailActualIfNull(actual);
+        /// <summary>
+        /// Asserts that an <see cref="Decimal"/> value exists in the IEnumerable{T} sequence that is equal to <paramref name="expected"/> within a given <paramref name="tolerance"/> value.
+        /// </summary>
+        /// <param name="actual"></param>
+        /// <param name="expected"></param>
+        /// <param name="tolerance"></param>
+        /// <returns></returns>
+        public static IEnumerable<Decimal> ShouldContain(this IEnumerable<Decimal> actual, Decimal expected, Decimal tolerance)
+        {
+            ShouldBeMessage.FailActualIfNull(actual);
 
-        //    if (actual.Any(a => Math.Abs(expected - a) < tolerance))
-        //    {
-        //        ShouldBeMessage.Fail(actual, expected, tolerance);
-        //    }
-        //    return actual;
-        //}
+            if (actual.Any(a => Math.Abs(expected - a) < tolerance))
+            {
+                ShouldBeMessage.Fail(actual, expected, tolerance);
+            }
+            return actual;
+        }
         #endregion
 
         #region ShouldNotContain with tolerance (numeric overloads)

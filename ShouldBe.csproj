@@ -53,13 +53,8 @@
     <DocumentationFile>bin\Release\ShouldBe.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhino.Mocks">
-      <HintPath>lib\Rhino.Mocks.dll</HintPath>
-    </Reference>
+    <Reference Include="nunit.framework" />
+    <Reference Include="Rhino.Mocks"/>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -125,7 +120,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>%25DEV_SCRIPT%25/BuildTools2.exe -postbuild -$(ConfigurationName) $(ProjectPath)</PostBuildEvent>
   </PropertyGroup>
 </Project>

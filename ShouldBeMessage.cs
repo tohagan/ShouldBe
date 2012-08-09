@@ -10,7 +10,7 @@ using ShouldBe.DifferenceHighlighting;
 
 namespace ShouldBe
 {
-    public class TestEnvironment
+    internal class TestEnvironment
     {
         public bool CanReadSourceCode { get; set; }
         public string ShouldMethod { get; set; }
@@ -19,11 +19,17 @@ namespace ShouldBe
     }
 
     /// <summary>
-    /// Helper class for creating assertion failure messages
+    /// Helper class for creating assertion failure messages.
     /// </summary>
-    public class ShouldBeMessage
+    /// <remarks>
+    /// Fails using NUnit's <see cref="Assert.Fail(string)"/> method 
+    /// to ensure that ShouldBe works with tools like ReSharper 
+    /// that are designed to integrate with NUnit.
+    /// </remarks>
+    internal class ShouldBeMessage
     {
-        public static void FailActualIfNull<T>(T actual)
+        internal static void FailActualIfNull<T>(T actual) 
+            where T : class
         {
             if (actual == null)
             {
@@ -31,42 +37,42 @@ namespace ShouldBe
             }
         }
 
-        public static void FailActual<T>(T actual)
+        internal static void FailActual<T>(T actual)
         {
             Assert.Fail(GetMessageActual(actual));
         }
 
-        public static void FailExpecting<T>(T expected)
+        internal static void FailExpecting<T>(T expected)
         {
             Assert.Fail(GetMessageExpecting(expected));
         }
 
-        public static void FailExpectingElement<T>(T expectedElement)
+        internal static void FailExpectingElement<T>(T expectedElement)
         {
             Assert.Fail(GetMessageExpectingElement(expectedElement));
         }
 
-        public static void FailExpectingFormatted(string expected)
+        internal static void FailExpectingFormatted(string expected)
         {
             Assert.Fail(GetMessageExpectingFormatted(expected));
         }
 
-        public static void Fail<T>(T actual, T expected)
+        internal static void Fail<T>(T actual, T expected)
         {
             Assert.Fail(GetMessage(actual, expected));
         }
 
-        public static void Fail<T>(IEnumerable<T> actual, T expected, T tolerance)
+        internal static void Fail<T>(IEnumerable<T> actual, T expected, T tolerance)
         {
             Assert.Fail(GetMessageWithTolerance(actual, expected, tolerance));
         }
 
-        public static void Fail<T>(IEnumerable<T> actual, T expected)
+        internal static void Fail<T>(IEnumerable<T> actual, T expected)
         {
             Assert.Fail(GetMessage(actual, expected));
         }
 
-        public static string GetMessage<T1, T2>(T1 actual, T2 expected)
+        internal static string GetMessage<T1, T2>(T1 actual, T2 expected)
         {
             string message = string.Format("{0}\n    {1}\n        but was\n    {2}",
                 GetContext(), expected.Inspect(), actual.Inspect());
@@ -80,37 +86,37 @@ namespace ShouldBe
             return message;
         }
 
-        public static string GetMessageWithTolerance<T>(IEnumerable<T> actual, T expected, T tolerance)
+        internal static string GetMessageWithTolerance<T>(IEnumerable<T> actual, T expected, T tolerance)
         {
             return string.Format("{0}\n    {1} (+/- {2})\n        but was\n    {3}",
                 GetContext(), expected, tolerance, actual.Inspect());
         }
         
-        public static string GetMessageActual<T>(T actual)
+        internal static string GetMessageActual<T>(T actual)
         {
             string context = GetContext();
             return string.Format("{0} but was\n    {1}", context, actual.Inspect());
         }
 
-        public static string GetMessageActualIsNull()
+        internal static string GetMessageActualIsNull()
         {
             string context = GetContext(true);
             return string.Format("{0} should not be null", context);
         }
 
-        public static string GetMessageExpecting<T>(T expected)
+        internal static string GetMessageExpecting<T>(T expected)
         {
             string context = GetContext();
             return string.Format("{0}\n    {1}", context, expected.Inspect());
         }
 
-        public static string GetMessageExpectingFormatted(string expected)
+        internal static string GetMessageExpectingFormatted(string expected)
         {
             string context = GetContext();
             return string.Format("{0}\n    {1}", context, expected);
         }
 
-        public static string GetMessageExpectingElement<T>(T expectedElement)
+        internal static string GetMessageExpectingElement<T>(T expectedElement)
         {
             string context = GetContext();
             return string.Format("{0} an element satisfying the condition\n    {1}",
