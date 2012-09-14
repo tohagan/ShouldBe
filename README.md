@@ -66,7 +66,7 @@ Outputs:
 
 If you want to check that a particular call does/does not throw an exception, it's as simple as:
 
-    Should.ThrowException<ArgumentOutOfRangeException>(() => widget.Twist(-1));
+    Should.ShouldThrowException<ArgumentOutOfRangeException>(() => widget.Twist(-1));
 
 ### Key Features
 
