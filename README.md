@@ -18,6 +18,11 @@ At first glance this API looks more fully featured but we suspect most of its fe
 
 This lib inspired us to modify ShouldBe to be fluent!
 
+### How to reference ShouldBe in your VS.NET project:
+
+<Reference Include="ShouldBe, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8cdd7c9ef40df8f9, processorArchitecture=MSIL" />
+
+
 ### Why use ShouldBe?
 
 This is the old *Assert* way: 
@@ -202,3 +207,8 @@ Main reasons included:
 
 ### Rhino Mocks (Deprecated in Shouldly)
     ShouldHaveBeenCalled
+
+### Failed  - Useful in writing your own custom assertions methods.
+    Failed<T>(T expected)   (new)
+    Failed<T>(T actual, T expected)   (new)
+    Failed<T>(IEnumerable<T> actual, expected)   (new)

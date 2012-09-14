@@ -15,17 +15,17 @@ namespace ShouldBe.DifferenceHighlighting
         private const int MaxElementsToShow = 1000;
         private readonly DifferenceHighlighter _differenceHighlighter;
 
-        internal EnumerableHighlighter(DifferenceHighlighter differenceHighlighter)
+        public EnumerableHighlighter(DifferenceHighlighter differenceHighlighter)
         {
             _differenceHighlighter = differenceHighlighter;
         }
 
-        internal EnumerableHighlighter() : this(new DifferenceHighlighter())
+        public EnumerableHighlighter() : this(new DifferenceHighlighter())
         {
         }
 
         #region IHighlighter
-        public bool CanProcess<T1, T2>(T1 expected, T2 actual) 
+        public bool CanProcess<T1, T2>(T1 expected, T2 actual)
         {
             return  expected != null && actual != null
                     && (expected is IEnumerable)

@@ -8,23 +8,48 @@ using System.Text.RegularExpressions;
 
 namespace ShouldBe
 {
+    /// <summary>
+    /// Extension methods to map types to string values.
+    /// </summary>
     public static class StringHelpers
     {
+        /// <summary> 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="enumerable"></param>
+        /// <returns></returns>
         public static string CommaDelimited<T>(this IEnumerable<T> enumerable) where T : class
         {
             return enumerable.DelimitWith(", ");
         }
 
+        /// <summary>
+        /// Convert a typed enumeration to a delimited string
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="enumerable"></param>
+        /// <param name="separator"></param>
+        /// <returns></returns>
         public static string DelimitWith<T>(this IEnumerable<T> enumerable, string separator) where T : class
         {
             return string.Join(separator, enumerable.Select(i => Equals(i, default(T)) ? null : i.ToString()).ToArray());
         }
 
+        /// <summary>
+        /// converts an enumeration value to a EnumName.value string
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static string Inspect(this Enum value)
         {
             return value.GetType().Name + "." + value;
         }
 
+        /// <summary>
+        /// Converts most object types to a string
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static string Inspect(this object value)
         {
             if (value == null)
@@ -62,16 +87,32 @@ namespace ShouldBe
             return value.ToString();
         }
 
-        public static string PascalToSpaced(this string pascal)
+        /// <summary>
+        /// Replace camel cased identifiers with space delimited string.
+        /// </summary>
+        /// <param name="pascal"></param>
+        /// <returns></returns>
+        /// <remarks>Used convert assertion method names to failure descriptions</remarks>
+        public static string CamelCasedToSpaced(this string pascal)
         {
             return Regex.Replace(pascal, @"([A-Z])", match => " " + match.Value.ToLower()).Trim();
         }
 
+        /// <summary>
+        /// Replaces single quotes with double quotes
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static string Quotify(this string input)
         {
             return input.Replace('\'', '"');
         }
 
+        /// <summary>
+        /// Remove whitespace chars.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static string StripWhitespace(this string input)
         {
             return Regex.Replace(input, @"\s+", "");

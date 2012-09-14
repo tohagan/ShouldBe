@@ -3,6 +3,7 @@ using NUnit.Framework;
 
 namespace ShouldBe
 {
+    /// <summary/>
     [DebuggerStepThrough]
     [ShouldBeMethods]
     public static class ShouldBeStringTestExtensions

@@ -35,4 +35,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
-[assembly: InternalsVisibleTo("ShouldBe.UnitTests")]
+[assembly: InternalsVisibleTo("ShouldBe.UnitTests, PublicKey=0024000004800000940000000602000000240000525341310004000001000100d945f3f74c71daeeb110ee6b6da85d51bc10dc9966c430aa3451afa4fc8f95fcb24efcef63b5596e918755a30f6348ff374ef9a864e345a6c2350f258357bb577f3db8cf390253bbae9105e6608a633561b07437cd99d67258733f1537b4491c853cf52f788a0b2740183682f740d1568f84f9d00fcd80333b01ce23126be888")]
+[assembly: AssemblyKeyFileAttribute("ShouldBe.snk")]
