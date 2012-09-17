@@ -172,7 +172,7 @@ namespace ShouldBe.UnitTests
         [Test]
         public void ShouldBeTheSet_WithAddedAndRemovedElements_ShouldFailWithMessage()
         {
-            TestHelper.ShouldFailWithError(() => 
+            TestHelper.ShouldFailWithError(() =>
                 new[] { 2, 7, 10, 9 }.ShouldBeTheSet(new[] { 2, 3, 10, 15, 9 }),
                 @"new[] { 2, 7, 10, 9 } should be the set {2, 3, 9, 10, 15} but was {2, 7, 9, 10} difference {2, *7*, 9, 10, *} missing {3, 15} not expected {7}");
         }

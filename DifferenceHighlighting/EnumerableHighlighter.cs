@@ -25,7 +25,7 @@ namespace ShouldBe.DifferenceHighlighting
         }
 
         #region IHighlighter
-        public bool CanProcess<T1, T2>(T1 expected, T2 actual)
+        public bool CanProcess<T1, T2>(T1 expected, T2 actual) 
         {
             return  expected != null && actual != null
                     && (expected is IEnumerable)
