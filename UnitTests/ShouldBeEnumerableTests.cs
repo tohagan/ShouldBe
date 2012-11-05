@@ -96,7 +96,7 @@ namespace ShouldBe.UnitTests
 
             TestHelper.ShouldFailWithError(() =>
                 new[] { 1, 2, 3 }.ShouldContain(x => x % 4 == 0),
-                "new[]{1,2,3} should contain an element satisfying the condition ((x % 4) = 0)");
+                "new[]{1,2,3} should contain an element satisfying the condition ((x % 4) == 0)");
 
             int[] NullArray = null;
             TestHelper.ShouldFailWithError(() =>
@@ -111,7 +111,7 @@ namespace ShouldBe.UnitTests
 
             TestHelper.ShouldFailWithError(() =>
                 new[] { 1, 2, 3 }.ShouldNotContain(x => x % 3 == 0),
-                "new[] {1,2,3} should not contain an element satisfying the condition ((x % 3) = 0)");
+                "new[] {1,2,3} should not contain an element satisfying the condition ((x % 3) == 0)");
 
             int[] NullArray = null;
             TestHelper.ShouldFailWithError(() =>
