@@ -237,6 +237,25 @@ namespace ShouldBe
             return actual;
         }
 
+        /// <summary>
+        /// Asserts that all of the elements in the IEnumerable{T} sequence fulfills the <param name="elementPredicate"/> assertion.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="actual"></param>
+        /// <param name="elementPredicate"></param>
+        /// <returns></returns>
+        public static IEnumerable<T> ShouldBeAll<T>(this IEnumerable<T> actual, Expression<Func<T, bool>> elementPredicate)
+        {
+            ShouldBeMessage.FailActualIfNull(actual);
+
+            var condition = elementPredicate.Compile();
+            if (!actual.All(condition))
+            {
+                ShouldBeMessage.FailExpectingElement(elementPredicate.Body);
+            }
+            return actual;
+        }
+
         #region Ascending/ Descending
 
         /// <summary>
