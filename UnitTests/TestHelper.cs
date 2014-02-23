@@ -34,7 +34,8 @@ namespace ShouldBe.UnitTests
 
                 Assert.Fail(string.Format(
                     "Should fail with error\n{0}:{1}\n    but error was\n{2}:{3}\n",
-                    strippedExpected.Length, strippedExpected, strippedActual.Length, strippedActual));
+                    expectedError.Length, expectedError, actualError.Length, actualError));
+                    //strippedExpected.Length, strippedExpected, strippedActual.Length, strippedActual));
             }
 
             Assert.Fail(string.Format(
