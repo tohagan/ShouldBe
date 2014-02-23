@@ -94,6 +94,9 @@ namespace ShouldBe.UnitTests
         {
             new[]{1,2,3}.ShouldContain(x => x % 3 == 0);
 
+            // BUG: Predicate unparser converts the condition from:
+            //  "x % 4 == 0"   INTO   " x % 4 = 0"   
+
             TestHelper.ShouldFailWithError(() =>
                 new[] { 1, 2, 3 }.ShouldContain(x => x % 4 == 0),
                 "new[]{1,2,3} should contain an element satisfying the condition ((x % 4) == 0)");
@@ -108,6 +111,9 @@ namespace ShouldBe.UnitTests
         public void TestShouldNotContain_WithPredicate()
         {
             new[] { 1, 2, 3 }.ShouldNotContain(x => x % 4 == 0);
+
+            // BUG Predicate unparser converts the condition from:
+            //  "x % 3 == 0"   INTO   " x % 3 = 0"   
 
             TestHelper.ShouldFailWithError(() =>
                 new[] { 1, 2, 3 }.ShouldNotContain(x => x % 3 == 0),
