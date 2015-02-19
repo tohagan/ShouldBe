@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2012
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30626.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShouldBe", "ShouldBe.csproj", "{9D9CFF4C-C35D-4DDE-862B-74E84837C0C4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShouldBe.UnitTests", "UnitTests\ShouldBe.UnitTests.csproj", "{34CB744A-4D38-46EA-A0B4-5A06830BA7E2}"

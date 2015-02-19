@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ShouldBe</RootNamespace>
     <AssemblyName>ShouldBe</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -55,13 +55,32 @@
     <DocumentationFile>bin\Release\ShouldBe.xml</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\GraphVizer.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.core">
-      <HintPath>C:\Program Files (x86)\NUnit 2.6.2\bin\lib\nunit.core.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework" />
-    <Reference Include="Rhino.Mocks">
-      <HintPath>..\libs\Rhino.Mocks.dll</HintPath>
+    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -81,7 +100,7 @@
     <Compile Include="DifferenceHighlighting\DifferenceHighlighterExtensions.cs" />
     <Compile Include="DifferenceHighlighting\EnumerableHighlighter.cs" />
     <Compile Include="DifferenceHighlighting\IHighlighter.cs" />
-    <Compile Include="MockMe.cs" />
+    <Content Include="MockMe.cs.txt" />
     <Compile Include="ObjectHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Should.cs" />
@@ -90,7 +109,7 @@
     <Compile Include="ShouldBeEnumerableTestExtensions.cs" />
     <Compile Include="ShouldBeMessage.cs" />
     <Compile Include="ShouldBeMethodsAttribute.cs" />
-    <Compile Include="ShouldBeRhinoExtensions.cs" />
+    <Content Include="ShouldBeRhinoExtensions.cs.txt" />
     <Compile Include="ShouldBeStringTestExtensions.cs" />
     <Compile Include="ShouldBeTestExtensions.cs" />
     <Compile Include="StringHelpers.cs" />
@@ -116,6 +135,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="README.md" />
     <None Include="RELEASE.md" />
     <None Include="ShouldBe.snk" />
