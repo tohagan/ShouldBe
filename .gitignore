@@ -6,3 +6,4 @@ obj
 /_ReSharper.*
 /Releases
 /lib/nunit
+/UnitTests/*.DotSettings
