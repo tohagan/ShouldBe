@@ -89,3 +89,4 @@
 *.exe  binary
 *.dll  binary
 *.def  binary
+*.pdb  binary
