@@ -34,8 +34,8 @@ namespace ShouldBe
         private static string MethodCall(string name, IEnumerable<object> arguments)
         {
             return string.Format("{0}({1})", 
-                                 name, 
-                                 arguments.Select(a => a.Inspect()).CommaDelimited());
+                                 name,
+                                 arguments.Select(a => a.Inspect()).DelimitWith(", "));
         }
    }
 }

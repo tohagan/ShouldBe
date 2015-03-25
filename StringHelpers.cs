@@ -13,16 +13,6 @@ namespace ShouldBe
     /// </summary>
     public static class StringHelpers
     {
-        /// <summary> 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="enumerable"></param>
-        /// <returns></returns>
-        public static string CommaDelimited<T>(this IEnumerable<T> enumerable) where T : class
-        {
-            return enumerable.DelimitWith(", ");
-        }
-
         /// <summary>
         /// Convert a typed enumeration to a delimited string
         /// </summary>
@@ -64,8 +54,17 @@ namespace ShouldBe
 
             if (value is IEnumerable)
             {
-                var objects = Enumerable.Cast<object>(value.As<IEnumerable>());
-                return "{" + objects.Select(o => o.Inspect()).CommaDelimited() + "}";
+                object[] objects = Enumerable.Cast<object>(value.As<IEnumerable>()).ToArray();
+                
+                string result = "{" + objects.Select(o => o.Inspect()).DelimitWith(", ") + "}";
+
+                if (result.Length > 30)
+                {
+                    // Split into multiple lines for improved readability
+                    result = "\n{\n  " + objects.Select(o => o.Inspect()).DelimitWith(",\n  ") + "\n}\n";
+                }
+
+                return result;
             }
 
             if (value is Enum)
