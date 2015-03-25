@@ -68,7 +68,9 @@ namespace ShouldBe
             }
 
             if (value is Enum)
+            {
                 return Inspect(value.As<Enum>());
+            }
 
             if (value is ConstantExpression)
             {
