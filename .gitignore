@@ -1,8 +1,11 @@
 *.user
 *.suo
 *.dotCover
+_ReSharper.*
+*.DotSettings
+
 bin
 obj
-/_ReSharper.*
-/Releases
+Releases
 /lib/nunit
+
