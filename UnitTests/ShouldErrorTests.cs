@@ -14,7 +14,7 @@ namespace ShouldBe.UnitTests
         [Test]
         public void ShouldFailWithError_ShouldFail_WhenActionSucceeds()
         {
-            string expectedMessage = "'blah de blah'";
+            string expectedMessage = "blah de blah";
             try
             {
                 TestHelper.ShouldFailWithError(() =>

@@ -3,7 +3,6 @@
 namespace ShouldBe.UnitTests
 {
     [TestFixture]
-    [ShouldBeMethods]
     public class ShouldBeMessageTests
     {
         [Test]

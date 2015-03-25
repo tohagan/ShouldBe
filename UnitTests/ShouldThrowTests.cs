@@ -16,12 +16,24 @@ namespace ShouldBe.UnitTests
         }
 
         [Test]
-        public void ShouldThrowException_WithMatchingExceptionTypeAndMessage_ShouldSucceed()
+        public void ShouldThrowExceptionContaining_WithMatchingExceptionTypeAndMessage_ShouldSucceed()
         {
             Should.ShouldThrowExceptionContaining<NotImplementedException>(
                 () => { throw new NotImplementedException("I'm not implemented yet"); }, 
                 "I'm not implemented yet"
              );
+        }
+
+        [Test]
+        public void ShouldThrowExceptionContaining_WhenItThrowsIncorrectExceptionMessage_ShouldFail()
+        {
+            Action shouldThrowAction = () =>
+                Should.ShouldThrowExceptionContaining<RankException>(
+                    () => { throw new RankException("actual message"); },
+                    "expect message"
+                );
+
+            TestHelper.ShouldFailWithError(shouldThrowAction, "should throw exception containing \"expect message\" but was \"actual message\"");
         }
 
         [Test]
@@ -33,18 +45,6 @@ namespace ShouldBe.UnitTests
                 );
 
             TestHelper.ShouldFailWithError(shouldThrowAction, "should throw exception System.NotImplementedException but was System.RankException");
-        }
-
-        [Test]
-        public void ShouldThrowException_WhenItThrowsIncorrectExceptionMessage_ShouldFail()
-        {
-            Action shouldThrowAction = () => 
-                Should.ShouldThrowExceptionContaining<RankException>(
-                    () => { throw new RankException("actual message"); }, 
-                    "expect message"
-                );
-
-            TestHelper.ShouldFailWithError(shouldThrowAction, "should throw exception containing \"expect message\" but was \"actual message\"");
         }
 
         [Test]
