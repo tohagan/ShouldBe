@@ -23,7 +23,7 @@ namespace ShouldBe
         }
 
         /// <summary>
-        /// Asserts that a string starts with the <paramref name="startWith"/> substring.
+        /// Asserts that a string starts with the <paramref name="startsWith"/> substring.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="startsWith"></param>

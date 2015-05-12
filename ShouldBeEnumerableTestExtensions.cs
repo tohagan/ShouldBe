@@ -7,10 +7,19 @@ using NUnit.Framework;
 
 namespace ShouldBe
 {
+    /// <summary>
+    /// Extension test methids for IEnumerable
+    /// </summary>
     [DebuggerStepThrough]
     [ShouldBeMethods]
     public static class ShouldBeEnumerableTestExtensions
     {
+        /// <summary>
+        /// Expect IEnumerable to be empty
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="actual"></param>
+        /// <returns></returns>
         public static IEnumerable<T> ShouldBeEmpty<T>(this IEnumerable<T> actual)
         {
             ShouldBeMessage.FailActualIfNull(actual);
@@ -21,6 +30,12 @@ namespace ShouldBe
             return actual;
         }
 
+        /// <summary>
+        /// Expect IEnumerable to not be empty
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="actual"></param>
+        /// <returns></returns>
         public static IEnumerable<T> ShouldNotBeEmpty<T>(this IEnumerable<T> actual)
         {
             ShouldBeMessage.FailActualIfNull(actual);
@@ -200,7 +215,7 @@ namespace ShouldBe
         }
 
         /// <summary>
-        /// Asserts that at least one element in the IEnumerable{T} sequence fulfills the <param name="elementPredicate"/> assertion.
+        /// Asserts that at least one element in the IEnumerable{T} sequence fulfills the <paramref name="elementPredicate"/> assertion.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="actual"></param>
@@ -219,7 +234,7 @@ namespace ShouldBe
         }
 
         /// <summary>
-        /// Asserts that none of the elements in the IEnumerable{T} sequence fulfills the <param name="elementPredicate"/> assertion.
+        /// Asserts that none of the elements in the IEnumerable{T} sequence fulfills the <paramref name="elementPredicate"/> assertion.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="actual"></param>
@@ -238,7 +253,7 @@ namespace ShouldBe
         }
 
         /// <summary>
-        /// Asserts that all of the elements in the IEnumerable{T} sequence fulfills the <param name="elementPredicate"/> assertion.
+        /// Asserts that all of the elements in the IEnumerable{T} sequence fulfills the <paramref name="elementPredicate"/> assertion.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="actual"></param>
@@ -455,36 +470,85 @@ namespace ShouldBe
         #endregion
 
         #region ShouldNotContain with tolerance (numeric overloads)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="actual"></param>
+        /// <param name="expected"></param>
+        /// <param name="tolerance"></param>
+        /// <returns></returns>
         public static IEnumerable<float> ShouldNotContain(this IEnumerable<float> actual, float expected, float tolerance)
         {
             return actual.ShouldNotContain(a => Math.Abs(expected - a) < tolerance);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="actual"></param>
+        /// <param name="expected"></param>
+        /// <param name="tolerance"></param>
+        /// <returns></returns>
         public static IEnumerable<double> ShouldNotContain(this IEnumerable<double> actual, double expected, double tolerance)
         {
             return actual.ShouldNotContain(a => Math.Abs(expected - a) < tolerance);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="actual"></param>
+        /// <param name="expected"></param>
+        /// <param name="tolerance"></param>
+        /// <returns></returns>
         public static IEnumerable<sbyte> ShouldNotContain(this IEnumerable<sbyte> actual, sbyte expected, sbyte tolerance)
         {
             return actual.ShouldNotContain(a => Math.Abs(expected - a) < tolerance);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="actual"></param>
+        /// <param name="expected"></param>
+        /// <param name="tolerance"></param>
+        /// <returns></returns>
         public static IEnumerable<short> ShouldNotContain(this IEnumerable<short> actual, short expected, short tolerance)
         {
             return actual.ShouldNotContain(a => Math.Abs(expected - a) < tolerance);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="actual"></param>
+        /// <param name="expected"></param>
+        /// <param name="tolerance"></param>
+        /// <returns></returns>
         public static IEnumerable<int> ShouldNotContain(this IEnumerable<int> actual, int expected, int tolerance)
         {
             return actual.ShouldNotContain(a => Math.Abs(expected - a) < tolerance);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="actual"></param>
+        /// <param name="expected"></param>
+        /// <param name="tolerance"></param>
+        /// <returns></returns>
         public static IEnumerable<long> ShouldNotContain(this IEnumerable<long> actual, long expected, long tolerance)
         {
             return actual.ShouldNotContain(a => Math.Abs(expected - a) < tolerance);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="actual"></param>
+        /// <param name="expected"></param>
+        /// <param name="tolerance"></param>
+        /// <returns></returns>
         public static IEnumerable<Decimal> ShouldNotContain(this IEnumerable<Decimal> actual, Decimal expected, Decimal tolerance)
         {
             return actual.ShouldNotContain(a => Math.Abs(expected - a) < tolerance);

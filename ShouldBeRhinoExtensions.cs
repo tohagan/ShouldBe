@@ -8,8 +8,17 @@ using NUnit.Framework;
 
 namespace ShouldBe
 {
+    /// <summary>
+    /// Rhino Moch text extensions
+    /// </summary>
     public static class ShouldBeRhinoExtensions
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="mock"></param>
+        /// <param name="action"></param>
         public static void ShouldHaveBeenCalled<T>(this T mock, Expression<Action<T>> action)
         {
             try
@@ -31,6 +40,12 @@ namespace ShouldBe
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="arguments"></param>
+        /// <returns></returns>
         private static string MethodCall(string name, IEnumerable<object> arguments)
         {
             return string.Format("{0}({1})", 

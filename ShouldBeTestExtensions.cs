@@ -15,7 +15,7 @@ namespace ShouldBe
 
         /// <summary>
         /// Asserts that the <paramref name="actual"/> and <paramref name="expected"/> values are equal. 
-        /// Your .NET compiler & IDE checks that they are of also of the same type.
+        /// Your .NET compiler and IDE checks that they are of also of the same type.
         /// Can be used assert that a value is expected to be null.
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -29,7 +29,7 @@ namespace ShouldBe
 
         /// <summary>
         /// Asserts that the <paramref name="actual"/> and <paramref name="expected"/> values are not equal. 
-        /// Your .NET compiler & IDE checks that they are of also of the same type.
+        /// Your .NET compiler and IDE checks that they are of also of the same type.
         /// Can be used assert that a value is expected to be not null.
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -43,7 +43,7 @@ namespace ShouldBe
 
         /// <summary>
         /// Asserts that the <paramref name="actual"/> and <paramref name="expected"/> values are equal within a given tolerance. 
-        /// Your .NET compiler & IDE checks that they are of also of the same type.
+        /// Your .NET compiler and IDE checks that they are of also of the same type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="actual"></param>
@@ -57,7 +57,7 @@ namespace ShouldBe
 
         /// <summary>
         /// Asserts that the <paramref name="actual"/> and <paramref name="expected"/> values are not equal within a given tolerance. 
-        /// Your .NET compiler & IDE checks that they are of also of the same type.
+        /// Your .NET compiler and IDE checks that they are of also of the same type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="actual"></param>
@@ -261,7 +261,7 @@ namespace ShouldBe
         #region GreaterThan / AtLeast
         /// <summary>
         /// Asserts that the value is greater than <paramref name="expected"/>.
-        /// Your .NET compiler & IDE checks that they are of also of the same type.
+        /// Your .NET compiler and IDE checks that they are of also of the same type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="actual"></param>
@@ -274,7 +274,7 @@ namespace ShouldBe
 
         /// <summary>
         /// Asserts that the value is greater than or equal to <paramref name="expected"/>.
-        /// Your .NET compiler & IDE checks that they are of also of the same type.
+        /// Your .NET compiler and IDE checks that they are of also of the same type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="actual"></param>
@@ -287,7 +287,7 @@ namespace ShouldBe
 
         /// <summary>
         /// Asserts that the value at least <paramref name="expected"/>.
-        /// Your .NET compiler & IDE checks that they are of also of the same type.
+        /// Your .NET compiler and IDE checks that they are of also of the same type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="actual"></param>
@@ -303,7 +303,7 @@ namespace ShouldBe
         #region LessThan / AtMost
         /// <summary>
         /// Asserts that the value at less than <paramref name="expected"/>.
-        /// Your .NET compiler & IDE checks that they are of also of the same type.
+        /// Your .NET compiler and IDE checks that they are of also of the same type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="actual"></param>
@@ -316,7 +316,7 @@ namespace ShouldBe
 
         /// <summary>
         /// Asserts that the value at less than or equal to <paramref name="expected"/>.
-        /// Your .NET compiler & IDE checks that they are of also of the same type.
+        /// Your .NET compiler and IDE checks that they are of also of the same type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="actual"></param>
@@ -329,7 +329,7 @@ namespace ShouldBe
 
         /// <summary>
         /// Asserts that the value is at most <paramref name="expected"/>.
-        /// Your .NET compiler & IDE checks that they are of also of the same type.
+        /// Your .NET compiler and IDE checks that they are of also of the same type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="actual"></param>
@@ -345,7 +345,7 @@ namespace ShouldBe
         #region SameAs
         /// <summary>
         /// Asserts that the value is the same object reference as <paramref name="expected"/>.
-        /// Your .NET compiler & IDE checks that they are of also of the same type.
+        /// Your .NET compiler and IDE checks that they are of also of the same type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="actual"></param>
@@ -358,7 +358,7 @@ namespace ShouldBe
 
         /// <summary>
         /// Asserts that the value is not the same object reference as <paramref name="expected"/>.
-        /// Your .NET compiler & IDE checks that they are of also of the same type.
+        /// Your .NET compiler and IDE checks that they are of also of the same type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="actual"></param>
