@@ -25,7 +25,7 @@ namespace ShouldBe.UnitTests
             {
                 action();
             }
-            catch (AssertionException ex)
+            catch (Exception ex)
             {
                 var actualError = ex.Message;
                 var strippedActual = actualError.StripWhitespace();
@@ -33,7 +33,7 @@ namespace ShouldBe.UnitTests
 
                 if (strippedActual.Contains(strippedExpected)) return;
 
-                Assert.Fail("Should fail with error\n{0}:{1}\n    but error was\n{2}:{3}\n",
+                Assert.Fail("Should fail with error\n'{0}:{1}'\n    but error was\n'{2}:{3}'\n",
                     expectedError.Length, expectedError, actualError.Length, actualError);
                     //strippedExpected.Length, strippedExpected, strippedActual.Length, strippedActual));
             }

@@ -124,7 +124,7 @@ namespace ShouldBe.UnitTests
             Expression<Action> lambda = () => 1.ShouldBe(2);
 
             TestHelper.ShouldFailWithError(lambda.Compile(),
-            "The provided expression should be 2 but was 1");
+                "TestHelper\n  should fail with error\n    2\n        but was\n    1");
         }
     }
 }
