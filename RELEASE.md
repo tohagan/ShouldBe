@@ -1,3 +1,6 @@
+
+
+
 ### ShouldBe Unit Test Library - Release Notes
 
 *Requirements:*
@@ -7,6 +10,11 @@
 * Rhino Mocks - Tested with Rhino Mocks 3.6.0.0
 
 ---
+### v2.0.0 Release  22-AUG-2018
+* Added VS2017 solution file.
+* Using NuGet for NUnit reference.
+* Removed Rhino Mocks support.
+
 ### v1.0.2 Release  09-AUG-2012
 * Added missing API documentation
 * Added Enumerable&lt;T&gt; assertions (unit tested)

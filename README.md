@@ -126,7 +126,7 @@ we found it needed too much adaptation for use on our projects.
 
 Main reasons included:
 
-  * Too many external component dependencies for our needs.  (We only needed NUnit and Rhino mocks)
+  * Too many external component dependencies for our needs.  (We only needed NUnit)
   * Our breaking changes that might not align with where Shoudly was heading or existing projects that use it.
   * Refactoring of the reporting system (we kept the key concept).
   * Refactoring of internal unit tests.
@@ -204,9 +204,6 @@ Main reasons included:
 ### Exceptions
     Should.ThrowException<T>(Action)
     Should.ThrowExceptionContaining<T>(Action)  (new)
-
-### Rhino Mocks (Deprecated in Shouldly)
-    ShouldHaveBeenCalled
 
 ### Failed  - Useful in writing your own custom assertions methods.
     Failed<T>(T expected)   (new)
