@@ -39,10 +39,12 @@ namespace ShouldBe.UnitTests
         // Should not be case insensitive
 
         [Test]
-        [ExpectedException(typeof(AssertionException))]
         public void ShouldStartWith_Should_Fail_For_CH_In_Cheese()
         {
-            "Cheese".ShouldStartWith("CH");
+            Assert.Throws<AssertionException>(delegate
+            {
+                "Cheese".ShouldStartWith("CH");
+            });
         }
 
         [Test]
@@ -52,10 +54,13 @@ namespace ShouldBe.UnitTests
         }
 
         [Test]
-        [ExpectedException(typeof(AssertionException))]
+//        [ExpectedException(typeof(AssertionException))]
         public void ShouldEndWith_Should_Succeed_For_EZ_In_Cheez()
         {
-            "Cheez".ShouldEndWith("EZ");
+            Assert.Throws<AssertionException>(delegate
+            {
+                "Cheez".ShouldEndWith("EZ");
+            });
         }
 
         [Test]
@@ -65,10 +70,13 @@ namespace ShouldBe.UnitTests
         }
 
         [Test]
-        [ExpectedException(typeof(AssertionException))]
+//        [ExpectedException(typeof(AssertionException))]
         public void ShouldMatch_Should_Fail_Based_On_RegEx_Pattern()
         {
-            "Cheese".ShouldMatch(@"C.e{2}s[f]");
+            Assert.Throws<AssertionException>(delegate
+            {
+                "Cheese".ShouldMatch(@"C.e{2}s[f]");
+            });
         }
 
         [Test]
@@ -78,17 +86,23 @@ namespace ShouldBe.UnitTests
         }
 
         [Test]
-        [ExpectedException(typeof(AssertionException))]
+ //       [ExpectedException(typeof(AssertionException))]
         public void ShouldNotMatch_Should_Fail_Based_On_RegEx_Pattern()
         {
-            "Cheese".ShouldNotMatch(@"C.e{2}s[e]");
+            Assert.Throws<AssertionException>(delegate
+            {
+                "Cheese".ShouldNotMatch(@"C.e{2}s[e]");
+            });
         }
 
         [Test]
-        [ExpectedException(typeof(AssertionException))]
+ //       [ExpectedException(typeof(AssertionException))]
         public void ShouldContain_Should_Fail_For_hEE_In_Cheez()
         {
-            ("Che" + "ez").ShouldContain("hEE");
+            Assert.Throws<AssertionException>(delegate
+            {
+                ("Che" + "ez").ShouldContain("hEE");
+            });
         }
 
         [Test]

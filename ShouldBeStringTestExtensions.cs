@@ -30,7 +30,7 @@ namespace ShouldBe
         /// <returns></returns>
         public static string ShouldStartWith(this string value, string startsWith)
         {
-            return value.AssertAwesomely(Is.StringStarting(startsWith), value, startsWith);
+            return value.AssertAwesomely(Does.StartWith(startsWith), value, startsWith);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace ShouldBe
         /// <returns></returns>
         public static string ShouldEndWith(this string value, string endsWith)
         {
-            return value.AssertAwesomely(Is.StringEnding(endsWith), value, endsWith);
+            return value.AssertAwesomely(Does.EndWith(endsWith), value, endsWith);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace ShouldBe
         /// <returns></returns>
         public static string ShouldContain(this string value, string contains)
         {
-            return value.AssertAwesomely(Is.StringContaining(contains), value, contains);
+            return value.AssertAwesomely(Does.Contain(contains), value, contains);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace ShouldBe
         /// <returns></returns>
         public static string ShouldNotContain(this string value, string notContains)
         {
-            return value.AssertAwesomely(Is.Not.StringContaining(notContains), value, notContains);
+            return value.AssertAwesomely(Does.Not.Contain(notContains), value, notContains);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace ShouldBe
         /// <returns></returns>
         public static string ShouldMatch(this string actual, string regexPattern)
         {
-            return actual.AssertAwesomely(Is.StringMatching(regexPattern), actual, regexPattern);
+            return actual.AssertAwesomely(Does.Match(regexPattern), actual, regexPattern);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace ShouldBe
         /// <returns></returns>
         public static string ShouldNotMatch(this string actual, string regexPattern)
         {
-            return actual.AssertAwesomely(Is.Not.StringMatching(regexPattern), actual, regexPattern);
+            return actual.AssertAwesomely(Does.Not.Match(regexPattern), actual, regexPattern);
         }
     }
 }

@@ -33,49 +33,63 @@ namespace ShouldBe
     /// to ensure that ShouldBe works with tools like ReSharper 
     /// that are designed to integrate with NUnit.
     /// </remarks>
-    internal class ShouldBeMessage
+    internal static class ShouldBeMessage
     {
+        // replaced when testing using TestHelper
+        internal static Action<string> OnFail = Assert.Fail;
+
+        internal static bool TestHelper
+        {
+            get => OnFail == Assert.Fail;
+            set => OnFail = value ? ThrowAssertException : (Action<string>)Assert.Fail;
+        }
+
+        private static void ThrowAssertException(string msg)
+        {
+            throw new AssertionException(msg);
+        }
+
         public static void FailActualIfNull<T>(T actual)
         {
             if (actual == null)
             {
-                Assert.Fail(GetMessageActualIsNull());
+                OnFail(GetMessageActualIsNull());
             }
         }
 
         public static void FailActual<T>(T actual)
         {
-            Assert.Fail(GetMessageActual(actual));
+            OnFail(GetMessageActual(actual));
         }
 
         public static void FailExpecting<T>(T expected)
         {
-            Assert.Fail(GetMessageExpecting(expected));
+            OnFail(GetMessageExpecting(expected));
         }
 
         public static void FailExpectingElement<T>(T expectedElement)
         {
-            Assert.Fail(GetMessageExpectingElement(expectedElement));
+            OnFail(GetMessageExpectingElement(expectedElement));
         }
 
         public static void FailExpectingFormatted(string expected)
         {
-            Assert.Fail(GetMessageExpectingFormatted(expected));
+            OnFail(GetMessageExpectingFormatted(expected));
         }
 
         public static void Fail<T>(T actual, T expected, string context = null)
         {
-            Assert.Fail(GetMessage(actual, expected, context));
+            OnFail(GetMessage(actual, expected, context));
         }
 
         public static void Fail<T>(IEnumerable<T> actual, T expected, T tolerance)
         {
-            Assert.Fail(GetMessageWithTolerance(actual, expected, tolerance));
+            OnFail(GetMessageWithTolerance(actual, expected, tolerance));
         }
 
         public static void Fail<T>(IEnumerable<T> actual, T expected, string context = null)
         {
-            Assert.Fail(GetMessage(actual, expected, context));
+            OnFail(GetMessage(actual, expected, context));
         }
 
         public static string GetMessage<T1, T2>(T1 actual, T2 expected, string context = null)

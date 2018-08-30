@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
+using NUnit.Framework.Internal;
 
 namespace ShouldBe.UnitTests
 {
@@ -23,19 +25,31 @@ namespace ShouldBe.UnitTests
         {
             try
             {
+                ShouldBeMessage.TestHelper = true;
                 action();
             }
-            catch (Exception ex)
+            catch (AssertionException ex)
             {
                 var actualError = ex.Message;
                 var strippedActual = actualError.StripWhitespace();
                 var strippedExpected = expectedError.StripWhitespace();
 
-                if (strippedActual.Contains(strippedExpected)) return;
+                if (strippedActual.Contains(strippedExpected))
+                {
+                    // TestContext.CurrentContext.Result. = new TestContext.ResultAdapter(new TestResult());
+
+                    return;
+                }
+
+                ;
 
                 Assert.Fail("Should fail with error\n'{0}:{1}'\n    but error was\n'{2}:{3}'\n",
                     expectedError.Length, expectedError, actualError.Length, actualError);
-                    //strippedExpected.Length, strippedExpected, strippedActual.Length, strippedActual));
+                //strippedExpected.Length, strippedExpected, strippedActual.Length, strippedActual));
+            }
+            finally
+            {
+                ShouldBeMessage.TestHelper = false;
             }
 
             Assert.Fail("Should fail with error\n{0}\n    but it succeeded.",  expectedError);

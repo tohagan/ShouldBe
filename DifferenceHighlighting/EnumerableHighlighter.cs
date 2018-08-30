@@ -89,7 +89,7 @@ namespace ShouldBe.DifferenceHighlighting
                 return DifferenceHighlighter.HighlightCharacter;
             }
 
-            if (Is.EqualTo(actualList.ElementAt(itemPosition)).Matches(expectedList.ElementAt(itemPosition)))
+            if (Does.Equals(actualList.ElementAt(itemPosition), expectedList.ElementAt(itemPosition)))
             {
                 return actualList.ElementAt(itemPosition).Inspect();
             }
