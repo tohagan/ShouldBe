@@ -29,8 +29,8 @@ namespace ShouldBe
     /// Helper class for creating assertion failure messages.
     /// </summary>
     /// <remarks>
-    /// Fails using NUnit's <see cref="Assert.Fail(string)"/> method 
-    /// to ensure that ShouldBe works with tools like ReSharper 
+    /// Fails using <see cref="NUnit.Framework.Assert.Fail(string)"/> method.
+    /// This ensures ShouldBe works with tools like ReSharper 
     /// that are designed to integrate with NUnit.
     /// </remarks>
     internal class ShouldBeMessage
