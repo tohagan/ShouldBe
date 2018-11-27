@@ -33,12 +33,14 @@ namespace ShouldBe.UnitTests
 
                 if (strippedActual.Contains(strippedExpected)) return;
 
-                Assert.Fail("Should fail with error\n'{0}:{1}'\n    but error was\n'{2}:{3}'\n",
-                    expectedError.Length, expectedError, actualError.Length, actualError);
+                throw new AssertionException(
+                    string.Format("Should fail with error\n'{0}:{1}'\n    but error was\n'{2}:{3}'\n",
+                    strippedExpected.Length, strippedExpected, strippedActual.Length, strippedActual));
                     //strippedExpected.Length, strippedExpected, strippedActual.Length, strippedActual));
             }
 
-            Assert.Fail("Should fail with error\n{0}\n    but it succeeded.",  expectedError);
+            throw new AssertionException(
+                string.Format("Should fail with error\n{0}\n    but it succeeded.",  expectedError));
         }
 
         /// <summary>
@@ -64,10 +66,13 @@ namespace ShouldBe.UnitTests
 
                 if (strippedActual.Contains(strippedExpected)) return;
 
-                Assert.Fail("Should fail with error:\n{0}\n    but error was\n'{1}'\n", expectedError, actualError);
+                throw new AssertionException(
+                    string.Format("Should fail with error:\n{0}\n    but error was\n'{1}'\n", 
+                        expectedError, actualError));
             }
 
-            Assert.Fail("Should fail with error:\n{0}\n   but succeeded.", expectedError);
+            throw new AssertionException(
+                string.Format("Should fail with error:\n{0}\n   but succeeded.", expectedError));
         }
     }
 }

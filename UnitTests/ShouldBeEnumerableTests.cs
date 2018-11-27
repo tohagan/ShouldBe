@@ -13,7 +13,7 @@ namespace ShouldBe.UnitTests
 
             TestHelper.ShouldFailWithError(() =>
                 new[] { 1, 2, 3 }.ShouldBeEmpty(),
-                "new[] {1,2,3} should be empty but was {1, 2, 3}");
+                "new[] { 1, 2, 3 } should be empty but was {1, 2, 3}");
 
             int[] NullArray = null;
             TestHelper.ShouldFailWithError(() =>
@@ -43,7 +43,7 @@ namespace ShouldBe.UnitTests
 
             TestHelper.ShouldFailWithError(() =>
                 new[] { 1, 2, 3 }.ShouldContain(5),
-                "new[] {1,2,3} should contain 5 but was {1, 2, 3}");
+                "new[] { 1, 2, 3 } should contain 5 but was {1, 2, 3}");
 
             int[] NullArray = null;
             TestHelper.ShouldFailWithError(() =>
@@ -54,11 +54,11 @@ namespace ShouldBe.UnitTests
         [Test]
         public void TestShouldNotContain()
         {
-            new[]{1,2,3}.ShouldNotContain(5);
+            new[]{ 1, 2, 3 }.ShouldNotContain(5);
 
             TestHelper.ShouldFailWithError(() =>
                 new[] { 1, 2, 3 }.ShouldNotContain(3),
-                "new[] {1,2,3} should not contain 3 but was {1, 2, 3}");
+                "new[] { 1, 2, 3 } should not contain 3 but was {1, 2, 3}");
 
             int[] NullArray = null;
             TestHelper.ShouldFailWithError(() =>
@@ -134,11 +134,11 @@ namespace ShouldBe.UnitTests
 
             TestHelper.ShouldFailWithError(() =>
                 new[] { 1.0, 2.1, Math.PI, 4.321, 5.4321 }.ShouldContain(2.14, 0.02),
-                @"new[] { 1.0, 2.1, Math.PI, 4.321, 5.4321 } should contain 2.14 (+/- 0.02) but was {1, 2.1, 3.14159265358979, 4.321, 5.4321}");
+                @"new[] { 1.0, 2.1, Math.PI, 4.321, 5.4321 } should contain 2.14 (+/- 0.02) but was { 1, 2.1, 3.14159265358979, 4.321, 5.4321 } ");
 
             TestHelper.ShouldFailWithError(() =>
                 new[] { 1.0f, 2.1f, (float)Math.PI, 4.321f, 5.4321f }.ShouldContain(2.14f, 0.002f),
-                @"new[] { 1.0f, 2.1f, (float)Math.PI, 4.321f, 5.4321f } should contain 2.14 (+/- 0.002) but was {1, 2.1, 3.141593, 4.321, 5.4321}");
+                @"new[] { 1.0f, 2.1f, (float)Math.PI, 4.321f, 5.4321f } should contain 2.14 (+/- 0.002) but was { 1, 2.1, 3.141593, 4.321, 5.4321 }");
 
             float[] NullArray = null;
             TestHelper.ShouldFailWithError(() =>
@@ -180,7 +180,7 @@ namespace ShouldBe.UnitTests
         {
             TestHelper.ShouldFailWithError(() =>
                 new[] { 2, 7, 10, 9 }.ShouldBeTheSet(new[] { 2, 3, 10, 15, 9 }),
-                @"new[] { 2, 7, 10, 9 } should be the set {2, 3, 9, 10, 15} but was {2, 7, 9, 10} difference {2, *7*, 9, 10, *} missing {3, 15} not expected {7}");
+                @"new[] { 2, 7, 10, 9 } should be the set {2, 3, 9, 10, 15} but was {2, 7, 9, 10} difference { 2, *7*, 9, 10, * } missing {3, 15} not expected {7}");
         }
 
         public void TestShouldHaveUniqueKeys()
@@ -210,7 +210,7 @@ namespace ShouldBe.UnitTests
         {
             TestHelper.ShouldFailWithError(() =>
                 new[] { 1, 4, 2, 2, 5 }.ShouldBeAscending(),
-                @"new[] { 1, 4, 2, 2, 5 } should be ascending {1, 2, 2, 4, 5} but was {1, 4, 2, 2, 5} difference {1, *4*, 2, *2*, 5}");
+                @"new[] { 1, 4, 2, 2, 5 } should be ascending but was {1, 4, 2, 2, 5}");
         }
 
         [Test]
@@ -225,7 +225,7 @@ namespace ShouldBe.UnitTests
         {
             TestHelper.ShouldFailWithError(() =>
                 new[] { 10, 6, 10, 5, 3, -1 }.ShouldBeDescending(),
-                @"new[] { 10, 6, 10, 5, 3, -1 } should be descending {10, 10, 6, 5, 3, -1} but was {10, 6, 10, 5, 3, -1} difference {10, *6*, *10*, 5, 3, -1}");
+                @"new[] { 10, 6, 10, 5, 3, -1 } should be descending but was {10, 6, 10, 5, 3, -1}");
         }
 
         public void TestShouldBeAscendingWithComparer()

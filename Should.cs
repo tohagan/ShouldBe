@@ -15,7 +15,6 @@ namespace ShouldBe
     [ShouldBeMethods]
     public static class Should
     {
-        static readonly Exception fakeException = new AssertionException("Never thrown but keeps C# compiler happy");
         /// <summary>
         /// Test that an action throws an exception of type <typeparamref name="TException"/>.
         /// </summary>
@@ -38,9 +37,7 @@ namespace ShouldBe
                 ShouldBeMessage.Fail(e.GetType(), typeof(TException));
             }
 
-            Assert.Fail("Should throw " + typeof(TException) + " but failed to throw an exception.");
-
-            throw fakeException;
+            throw new AssertionException("Should throw " + typeof(TException) + " but failed to throw an exception.");
         }
 
         /// <summary>
@@ -73,9 +70,7 @@ namespace ShouldBe
                 ShouldBeMessage.Fail(e.GetType(), typeof(TException));
             }
 
-            Assert.Fail("Should throw " + typeof(TException) + " but failed to throw an exception.");
-
-            throw fakeException;
+            throw new AssertionException("Should throw " + typeof(TException) + " but failed to throw an exception.");
         }
 
 #if NET_45_OR_GREATER
@@ -101,9 +96,7 @@ namespace ShouldBe
                 ShouldBeMessage.Fail(e.GetType(), typeof(TException), "Should throw exception");
             }
 
-            Assert.Fail("Should throw " + typeof(TException) + " but failed to throw an exception.");
-
-            throw fakeException;
+            throw new AssertionException("Should throw " + typeof(TException) + " but failed to throw an exception.");
         }
 
         /// <summary>
@@ -136,9 +129,7 @@ namespace ShouldBe
                 ShouldBeMessage.Fail(e.GetType(), typeof(TException), "Should throw exception");
             }
 
-            Assert.Fail("Should throw " + typeof(TException) + " but failed to throw an exception.");
-
-            throw fakeException;
+            throw new AssertionException("Should throw " + typeof(TException) + " but failed to throw an exception.");
         }
 #endif
 

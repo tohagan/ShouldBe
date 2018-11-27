@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 
@@ -40,13 +41,19 @@ namespace ShouldBe.UnitTests
         }
 
         [Test]
+        public void HighlightDifferencesBetween_ListsHavingNullValues()
+        {
+            new int?[] { 1, null, 3 }.HighlightDifferencesBetween(new int?[] { 1, 2, null }).ShouldBe(NewLineDelimited("{1, *null*, *3*}"));
+        }
+
+        [Test]
         public void HighlightDifferencesBetween_DifferentTypes_DisplaysActualWithoutHighlight()
         {
             new[] { "hi", "mum" }.HighlightDifferencesBetween(new[] { 1, 2 }).ShouldBe("{\"hi\", \"mum\"}");
         }
 
         [Test]
-        public void HighlightDifferencesBetween_NotEnumerables_DisplaysActualWithoutHighlight()
+        public void HighlightDifferencesBetween_NonEnumerables_DisplaysActualWithoutHighlight()
         {
             "hello".HighlightDifferencesBetween("goodbye").ShouldBe(NewLineDelimited("\"hello\""));
         }

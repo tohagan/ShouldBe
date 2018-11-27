@@ -16,7 +16,7 @@ namespace ShouldBe.UnitTests
 
             TestHelper.ShouldFailWithError(
                 () => list.ShouldNotBeSameAs(sameReference),
-                "list should not be same as {1, 2, 3} but was {1, 2, 3} difference {1, 2, 3}"
+                "list should not be same as {1, 2, 3} but was {1, 2, 3} difference { 1, 2, 3 }"
                 );
         }
 
@@ -40,11 +40,11 @@ namespace ShouldBe.UnitTests
             var list = new List<int> { 1, 2, 3 };
             var equalListWithDifferentRef = new List<int> { 1, 2, 3 };
 
-            list.ShouldBe(equalListWithDifferentRef);
+            list.ShouldBeTheSequence(equalListWithDifferentRef);
 
             TestHelper.ShouldFailWithError(
                 () => list.ShouldBeSameAs(equalListWithDifferentRef),
-                "list should be same as {1, 2, 3} but was {1, 2, 3} difference {1, 2, 3}"
+                "list should be same as {1, 2, 3} but was {1, 2, 3} difference { 1, 2, 3 }"
             );
 
             list.ShouldNotBeSameAs(equalListWithDifferentRef);

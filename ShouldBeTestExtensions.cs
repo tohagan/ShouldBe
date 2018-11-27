@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace ShouldBe
 {
     /// <summary>
-    /// Wrapper extentions methods for <see cref="NUnit.Framework.Is"/> constraints.
+    /// Wrapper extensions methods for <see cref="NUnit.Framework.Is"/> constraints.
     /// </summary>
     [DebuggerStepThrough]
     [ShouldBeMethods]
@@ -38,7 +38,7 @@ namespace ShouldBe
         /// <returns></returns>
         public static T ShouldNotBe<T>(this T actual, T expected)
         {
-            return actual.AssertAwesomely(Is.Not.EqualTo(expected), actual, expected);
+             return actual.AssertAwesomely(Is.Not.EqualTo(expected), actual, expected);
         }
 
         /// <summary>
@@ -121,48 +121,57 @@ namespace ShouldBe
         /// Asserts that the value is an instance of type <typeparamref name="T"/> or a derived type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="actual"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
-        public static T ShouldBeInstanceOf<T>(this object actual)
+        public static T ShouldBeInstanceOf<T>(this object value)
         {
-            ShouldBeInstanceOf(actual, typeof(T));
-            return (T)actual;
+            ShouldBeInstanceOf(value, typeof(T));
+            return (T)value;
         }
 
         /// <summary>
         /// Asserts that the value is an instance of <paramref name="type"/> or a derived type.
         /// </summary>
-        /// <param name="actual"></param>
+        /// <param name="value"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static object ShouldBeInstanceOf(this object actual, Type type)
+        public static object ShouldBeInstanceOf(this object value, Type type)
         {
-            actual.AssertAwesomely(Is.InstanceOf(type), actual, type);
-            return actual;
+            ShouldBeMessage.FailActualIfNull(value == null);
+            if (!type.IsInstanceOfType(value))
+            {
+                ShouldBeMessage.Fail(value, type);
+            }
+
+            return value;
         }
 
         /// <summary>
         /// Asserts that the value is not an instance of type <typeparamref name="T"/> or a derived type.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="actual"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
-        public static object ShouldNotBeInstanceOf<T>(this object actual)
+        public static object ShouldNotBeInstanceOf<T>(this object value)
         {
-            ShouldNotBeInstanceOf(actual, typeof(T));
-            return actual;
+            ShouldNotBeInstanceOf(value, typeof(T));
+            return value;
         }
 
         /// <summary>
         /// Asserts that the value is not an instance of <paramref name="type"/> or a derived type.
         /// </summary>
-        /// <param name="actual"></param>
+        /// <param name="value"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static object ShouldNotBeInstanceOf(this object actual, Type type)
+        public static object ShouldNotBeInstanceOf(this object value, Type type)
         {
-            actual.AssertAwesomely(Is.Not.InstanceOf(type), actual, type);
-            return actual;
+            if (value == null || type.IsInstanceOfType(value))
+            {
+                ShouldBeMessage.Fail(value, type);
+            }
+
+            return value;
         }
         #endregion
 

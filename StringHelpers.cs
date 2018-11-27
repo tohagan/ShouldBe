@@ -116,7 +116,7 @@ namespace ShouldBe
         /// <returns></returns>
         public static string StripWhitespace(this string input)
         {
-            return Regex.Replace(input, @"\s+", "");
+            return Regex.Replace(input, @"\s+", " ").Trim();
         }
     }
 }

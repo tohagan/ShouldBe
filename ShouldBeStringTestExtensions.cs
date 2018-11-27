@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using NUnit.Framework;
 
 namespace ShouldBe
@@ -18,7 +19,11 @@ namespace ShouldBe
             var strippedActual = actual == null ? "null" : actual.Quotify().StripWhitespace();
             var strippedExpected = expected == null ? "null" : expected.Quotify().StripWhitespace();
 
-            strippedActual.AssertAwesomely(Is.EqualTo(strippedExpected), actual, expected);
+            if (strippedActual != strippedExpected)
+            {
+                ShouldBeMessage.Fail(actual, expected);
+            }
+
             return actual;
         }
 
@@ -30,7 +35,12 @@ namespace ShouldBe
         /// <returns></returns>
         public static string ShouldStartWith(this string value, string startsWith)
         {
-            return value.AssertAwesomely(Is.StringStarting(startsWith), value, startsWith);
+            if (!value.StartsWith(startsWith))
+            {
+                ShouldBeMessage.Fail(value, startsWith);
+            }
+
+            return value;
         }
 
         /// <summary>
@@ -41,7 +51,12 @@ namespace ShouldBe
         /// <returns></returns>
         public static string ShouldEndWith(this string value, string endsWith)
         {
-            return value.AssertAwesomely(Is.StringEnding(endsWith), value, endsWith);
+            if (!value.EndsWith(endsWith))
+            {
+                ShouldBeMessage.Fail(value, endsWith);
+            }
+
+            return value;
         }
 
         /// <summary>
@@ -52,7 +67,12 @@ namespace ShouldBe
         /// <returns></returns>
         public static string ShouldContain(this string value, string contains)
         {
-            return value.AssertAwesomely(Is.StringContaining(contains), value, contains);
+            if (!value.Contains(contains))
+            {
+                ShouldBeMessage.Fail(value, contains);
+            }
+
+            return value;
         }
 
         /// <summary>
@@ -63,29 +83,44 @@ namespace ShouldBe
         /// <returns></returns>
         public static string ShouldNotContain(this string value, string notContains)
         {
-            return value.AssertAwesomely(Is.Not.StringContaining(notContains), value, notContains);
+            if (value.Contains(notContains))
+            {
+                ShouldBeMessage.Fail(value, notContains);
+            }
+
+            return value;
         }
 
         /// <summary>
         /// Asserts that a string matches a regular expression.
         /// </summary>
-        /// <param name="actual"></param>
+        /// <param name="value"></param>
         /// <param name="regexPattern"></param>
         /// <returns></returns>
-        public static string ShouldMatch(this string actual, string regexPattern)
+        public static string ShouldMatch(this string value, string regexPattern)
         {
-            return actual.AssertAwesomely(Is.StringMatching(regexPattern), actual, regexPattern);
+            if (!Regex.IsMatch(value, regexPattern))
+            {
+                ShouldBeMessage.Fail(value, regexPattern);
+            }
+
+            return value;
         }
 
         /// <summary>
         /// Asserts that a string does not match a regular expression.
         /// </summary>
-        /// <param name="actual"></param>
+        /// <param name="value"></param>
         /// <param name="regexPattern"></param>
         /// <returns></returns>
-        public static string ShouldNotMatch(this string actual, string regexPattern)
+        public static string ShouldNotMatch(this string value, string regexPattern)
         {
-            return actual.AssertAwesomely(Is.Not.StringMatching(regexPattern), actual, regexPattern);
+            if (Regex.IsMatch(value, regexPattern))
+            {
+                ShouldBeMessage.Fail(value, regexPattern);
+            }
+
+            return value;
         }
     }
 }

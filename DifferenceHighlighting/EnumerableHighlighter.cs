@@ -28,9 +28,9 @@ namespace ShouldBe.DifferenceHighlighting
         public bool CanProcess<T1, T2>(T1 expected, T2 actual) 
         {
             return  expected != null && actual != null
-                    && (expected is IEnumerable)
+                    && expected is IEnumerable
                     && !(expected is string)
-                    && (expected.GetType() == actual.GetType());
+                    && expected.GetType() == actual.GetType();
         }
 
         public string HighlightDifferences<T1, T2>(T1 expected, T2 actual)
@@ -41,12 +41,11 @@ namespace ShouldBe.DifferenceHighlighting
 
         private string HighlightDifferences(IEnumerable expected, IEnumerable actual)
         {
-            if (CanProcess(expected, actual))
+            var expectedList = expected as object[] ?? expected.Cast<object>().ToArray();
+            var actualList = actual as object[] ?? actual.Cast<object>().ToArray();
+            if (CanProcess(expectedList, actualList))
             {
-                var actualList = actual.Cast<object>();
-                var expectedList = expected.Cast<object>();
-
-                var highestCount = actualList.Count() > expectedList.Count() ? actualList.Count() : expectedList.Count();
+                var highestCount = actualList.Length > expectedList.Length ? actualList.Length : expectedList.Length;
 
                 return HighlightDifferencesBetweenLists(actualList, expectedList, highestCount);
             }
@@ -54,7 +53,7 @@ namespace ShouldBe.DifferenceHighlighting
             return actual.Inspect();
         }
 
-        private string HighlightDifferencesBetweenLists(IEnumerable<object> actualList, IEnumerable<object> expectedList, int highestListCount)
+        private string HighlightDifferencesBetweenLists(object[] actualList, object[] expectedList, int highestListCount)
         {
             var returnMessage = new StringBuilder("\n{\n  ");
 
@@ -77,24 +76,27 @@ namespace ShouldBe.DifferenceHighlighting
             return returnMessage.Append("\n}\n").ToString();
         }
 
-        private string GetComparedItemString(IEnumerable<object> actualList, IEnumerable<object> expectedList, int itemPosition)
+        private string GetComparedItemString(object[] actualList, object[] expectedList, int itemPosition)
         {
-            if (expectedList.Count() <= itemPosition)
+            if (expectedList.Length <= itemPosition)
             {
-                return _differenceHighlighter.HighlightItem(actualList.ElementAt(itemPosition).Inspect());
+                return _differenceHighlighter.HighlightItem(actualList[itemPosition].Inspect());
             }
 
-            if (actualList.Count() <= itemPosition)
+            if (actualList.Length <= itemPosition)
             {
                 return DifferenceHighlighter.HighlightCharacter;
             }
 
-            if (Is.EqualTo(actualList.ElementAt(itemPosition)).Matches(expectedList.ElementAt(itemPosition)))
+            var el1 = actualList[itemPosition];
+            var el2 = expectedList[itemPosition];
+
+            if (el1?.Equals(el2) ?? el2 == null)
             {
-                return actualList.ElementAt(itemPosition).Inspect();
+                return el1.Inspect();
             }
 
-            return _differenceHighlighter.HighlightItem(actualList.ElementAt(itemPosition).Inspect());
+            return _differenceHighlighter.HighlightItem(el1.Inspect());
         }
    }
 }

@@ -28,54 +28,67 @@ namespace ShouldBe
     /// <summary>
     /// Helper class for creating assertion failure messages.
     /// </summary>
-    /// <remarks>
-    /// Fails using <see cref="NUnit.Framework.Assert.Fail(string)"/> method.
-    /// This ensures ShouldBe works with tools like ReSharper 
-    /// that are designed to integrate with NUnit.
-    /// </remarks>
     internal class ShouldBeMessage
     {
-        public static void FailActualIfNull<T>(T actual)
+        internal static T2 Assert<T1, T2>(
+            bool assertion,
+            T2 originalActual,
+            T2 originalExpected)
         {
-            if (actual == null)
+            if (!assertion)
             {
-                Assert.Fail(GetMessageActualIsNull());
+                Fail(originalActual, originalExpected);
+            }
+
+            return originalActual;
+        }
+
+        public static void FailActualIfNull(bool actualIsNull)
+        {
+            if (actualIsNull)
+            {
+                throw new AssertionException(GetMessageActualIsNull());
             }
         }
 
         public static void FailActual<T>(T actual)
         {
-            Assert.Fail(GetMessageActual(actual));
+            throw new AssertionException(GetMessageActual(actual));
+        }
+
+        public static void FailActual<T>(IEnumerable<T> actual)
+        {
+            throw new AssertionException(GetMessageActual(actual));
         }
 
         public static void FailExpecting<T>(T expected)
         {
-            Assert.Fail(GetMessageExpecting(expected));
+            throw new AssertionException(GetMessageExpecting(expected));
         }
 
         public static void FailExpectingElement<T>(T expectedElement)
         {
-            Assert.Fail(GetMessageExpectingElement(expectedElement));
+            throw new AssertionException(GetMessageExpectingElement(expectedElement));
         }
 
         public static void FailExpectingFormatted(string expected)
         {
-            Assert.Fail(GetMessageExpectingFormatted(expected));
+            throw new AssertionException(GetMessageExpectingFormatted(expected));
         }
 
         public static void Fail<T>(T actual, T expected, string context = null)
         {
-            Assert.Fail(GetMessage(actual, expected, context));
+            throw new AssertionException(GetMessage(actual, expected, context));
         }
 
         public static void Fail<T>(IEnumerable<T> actual, T expected, T tolerance)
         {
-            Assert.Fail(GetMessageWithTolerance(actual, expected, tolerance));
+            throw new AssertionException(GetMessageWithTolerance(actual, expected, tolerance));
         }
 
         public static void Fail<T>(IEnumerable<T> actual, T expected, string context = null)
         {
-            Assert.Fail(GetMessage(actual, expected, context));
+            throw new AssertionException(GetMessage(actual, expected, context));
         }
 
         public static string GetMessage<T1, T2>(T1 actual, T2 expected, string context = null)

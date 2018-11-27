@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace ShouldBe
 {
     /// <summary>
-    /// Extension test methids for IEnumerable
+    /// Extension test methods for IEnumerable
     /// </summary>
     [DebuggerStepThrough]
     [ShouldBeMethods]
@@ -22,12 +22,14 @@ namespace ShouldBe
         /// <returns></returns>
         public static IEnumerable<T> ShouldBeEmpty<T>(this IEnumerable<T> actual)
         {
-            ShouldBeMessage.FailActualIfNull(actual);
-            if (actual.Any())
+            ShouldBeMessage.FailActualIfNull(actual == null);
+            T[] actual1 = actual.ToArray();
+
+            if (actual1.Any())
             {
-                ShouldBeMessage.FailActual(actual);
+                ShouldBeMessage.FailActual(actual1);
             }
-            return actual;
+            return actual1;
         }
 
         /// <summary>
@@ -38,12 +40,14 @@ namespace ShouldBe
         /// <returns></returns>
         public static IEnumerable<T> ShouldNotBeEmpty<T>(this IEnumerable<T> actual)
         {
-            ShouldBeMessage.FailActualIfNull(actual);
-            if (!actual.Any())
+            ShouldBeMessage.FailActualIfNull(actual == null);
+            T[] actual1 = actual.ToArray();
+
+            if (!actual1.Any())
             {
-                ShouldBeMessage.FailActual(actual);
+                ShouldBeMessage.FailActual(actual1);
             }
-            return actual;
+            return actual1;
         }
 
         ///<summary>
@@ -58,27 +62,25 @@ namespace ShouldBe
         ///<typeparam name="T"></typeparam>
         public static IEnumerable<T> ShouldBeTheSequence<T>(this IEnumerable<T> actual, IEnumerable<T> expected)
         {
-            ShouldBeMessage.FailActualIfNull(actual);
+            ShouldBeMessage.FailActualIfNull(actual == null);
 
             T[] actualArray = actual.ToArray();
             T[] expectedArray = expected.ToArray();
 
             for (int i = 0; i < actualArray.Length && i < expectedArray.Length; i++)
             {
-                actualArray[i].AssertAwesomely(Is.EqualTo(expectedArray[i]), actualArray, expectedArray);
+                if (!actualArray[i].Equals(expectedArray[i]))
+                {
+                    ShouldBeMessage.Fail(actualArray, expectedArray);
+                }
             }
 
-            actualArray.Length.AssertAwesomely(Is.EqualTo(expectedArray.Length), actualArray, expectedArray);
+            if (actualArray.Length != expectedArray.Length)
+            {
+                ShouldBeMessage.Fail(actualArray, expectedArray);
+            }
 
-            //if (actualArray.Length < expectedArray.Length)
-            //{
-            //    Assert.Fail("Sequence is shorter than expected. Expected:\n{0}", expectedArray[actualArray.Length - 1].Inspect());
-            //}
-            //else if (actualArray.Length > expectedArray.Length)
-            //{
-            //    Assert.Fail("Sequence is longer than expected. Actual:\n{0}", actualArray[expectedArray.Length - 1].Inspect());
-            //}
-            return actual;
+            return actualArray;
         }
 
         ///<summary>
@@ -93,7 +95,7 @@ namespace ShouldBe
         ///<typeparam name="T"></typeparam>
         public static IEnumerable<T> ShouldBeTheSet<T>(this IEnumerable<T> actual, IEnumerable<T> expected)
         {
-            ShouldBeMessage.FailActualIfNull(actual);
+            ShouldBeMessage.FailActualIfNull(actual == null);
 
             T[] actual1 = actual.ToArray();
             T[] expected1 = expected.ToArray();
@@ -117,9 +119,10 @@ namespace ShouldBe
 
             if (onlyInExpected.Length > 0 || onlyInActual.Length > 0)
             {
-                Assert.Fail(ShouldBeMessage.GetMessage(actual1, expected1) + "\n" + msg);
+                throw new AssertionException(ShouldBeMessage.GetMessage(actual1, expected1) + "\n" + msg);
             }
-            return actual;
+
+            return actual1;
         }
 
         ///<summary>
@@ -137,16 +140,17 @@ namespace ShouldBe
         {
             // TODO: Needs a unit test.
  
-            ShouldBeMessage.FailActualIfNull(actual);
-            IGrouping<TKey, T>[] duplicates = actual.GroupBy(keyFunc).Where(g => g.Count() > 1).ToArray();
+            ShouldBeMessage.FailActualIfNull(actual == null);
+            T[] actual1 = actual.ToArray();
+            IGrouping<TKey, T>[] duplicates = actual1.GroupBy(keyFunc).Where(g => g.Count() > 1).ToArray();
 
             if (duplicates.Count() > 1)
             {
                 string msg = "  Duplicate Keys:\n" + duplicates.Select(d => d.Key.Inspect() + " -> " + d.Inspect()).DelimitWith("\n");
-                Assert.Fail(ShouldBeMessage.GetMessageActual(actual) + "\n" + msg);
+                Assert.Fail(ShouldBeMessage.GetMessageActual(actual1) + "\n" + msg);
             }
 
-            return actual;
+            return actual1;
         }
 
         // TODO: Review http://www.nunit.org/index.php?p=collectionAssert&r=2.5.9
@@ -162,7 +166,7 @@ namespace ShouldBe
         ///<typeparam name="T"></typeparam>
         public static IEnumerable<T> ShouldBeASubsetOf<T>(this IEnumerable<T> actual, IEnumerable<T> superset)
         {
-            ShouldBeMessage.FailActualIfNull(actual);
+            ShouldBeMessage.FailActualIfNull(actual == null);
             return actual.AssertAwesomely(Is.SubsetOf(superset), actual, superset);
         }
 
@@ -175,7 +179,7 @@ namespace ShouldBe
         ///<typeparam name="T"></typeparam>
         public static IEnumerable<T> ShouldContainTheSubset<T>(this IEnumerable<T> actual, IEnumerable<T> subset)
         {
-            ShouldBeMessage.FailActualIfNull(actual);
+            ShouldBeMessage.FailActualIfNull(actual == null);
             return subset.AssertAwesomely(Is.SubsetOf(actual), actual, subset);
         }
 
@@ -188,7 +192,7 @@ namespace ShouldBe
         /// <returns></returns>
         public static IEnumerable<T> ShouldContain<T>(this IEnumerable<T> actual, T expected)
         {
-            ShouldBeMessage.FailActualIfNull(actual);
+            ShouldBeMessage.FailActualIfNull(actual == null);
             if (!actual.Contains(expected))
             {
                 ShouldBeMessage.Fail(actual, expected);
@@ -205,7 +209,7 @@ namespace ShouldBe
         /// <returns></returns>
         public static IEnumerable<T> ShouldNotContain<T>(this IEnumerable<T> actual, T expected)
         {
-            ShouldBeMessage.FailActualIfNull(actual);
+            ShouldBeMessage.FailActualIfNull(actual == null);
 
             if (actual.Contains(expected))
             {
@@ -223,7 +227,7 @@ namespace ShouldBe
         /// <returns></returns>
         public static IEnumerable<T> ShouldContain<T>(this IEnumerable<T> actual, Expression<Func<T, bool>> elementPredicate)
         {
-            ShouldBeMessage.FailActualIfNull(actual);
+            ShouldBeMessage.FailActualIfNull(actual == null);
 
             var condition = elementPredicate.Compile();
             if (!actual.Any(condition))
@@ -242,7 +246,7 @@ namespace ShouldBe
         /// <returns></returns>
         public static IEnumerable<T> ShouldNotContain<T>(this IEnumerable<T> actual, Expression<Func<T, bool>> elementPredicate)
         {
-            ShouldBeMessage.FailActualIfNull(actual);
+            ShouldBeMessage.FailActualIfNull(actual == null);
 
             var condition = elementPredicate.Compile();
             if (actual.Any(condition))
@@ -261,7 +265,7 @@ namespace ShouldBe
         /// <returns></returns>
         public static IEnumerable<T> ShouldBeAll<T>(this IEnumerable<T> actual, Expression<Func<T, bool>> elementPredicate)
         {
-            ShouldBeMessage.FailActualIfNull(actual);
+            ShouldBeMessage.FailActualIfNull(actual == null);
 
             var condition = elementPredicate.Compile();
             if (!actual.All(condition))
@@ -282,17 +286,20 @@ namespace ShouldBe
         public static IEnumerable<T> ShouldBeAscending<T>(this IEnumerable<T> actual)
             where T : IComparable
         {
-            ShouldBeMessage.FailActualIfNull(actual);
+            ShouldBeMessage.FailActualIfNull(actual == null);
 
             T[] actualArray = actual.ToArray();
-            T[] expectedArray = actual.OrderBy(o => o).ToArray();
+            T[] expectedArray = actualArray.OrderBy(o => o).ToArray();
 
             for (int i = 0; i < actualArray.Length && i < expectedArray.Length; i++)
             {
-                actualArray[i].AssertAwesomely(Is.EqualTo(expectedArray[i]), actualArray, expectedArray);
+                if (!actualArray[i].Equals(expectedArray[i]))
+                {
+                    ShouldBeMessage.FailActual(actualArray);
+                }
             }
 
-            return actual;
+            return actualArray;
         }
 
         /// <summary>
@@ -307,17 +314,20 @@ namespace ShouldBe
             where TKey : IComparable
         {
             keySelector.ShouldNotBe(null);
-            ShouldBeMessage.FailActualIfNull(actual);
+            ShouldBeMessage.FailActualIfNull(actual == null);
 
             TElem[] actualArray = actual.ToArray();
-            TElem[] expectedArray = actual.OrderBy(keySelector).ToArray();
+            TElem[] expectedArray = actualArray.OrderBy(keySelector).ToArray();
 
             for (int i = 0; i < actualArray.Length && i < expectedArray.Length; i++)
             {
-                actualArray[i].AssertAwesomely(Is.EqualTo(expectedArray[i]), actualArray, expectedArray);
+                if (!actualArray[i].Equals(expectedArray[i]))
+                {
+                    ShouldBeMessage.FailActual(actualArray);
+                }
             }
 
-            return actual;
+            return actualArray;
         }
 
         /// <summary>
@@ -329,17 +339,20 @@ namespace ShouldBe
         public static IEnumerable<T> ShouldBeDescending<T>(this IEnumerable<T> actual)
             where T : IComparable
         {
-            ShouldBeMessage.FailActualIfNull(actual);
+            ShouldBeMessage.FailActualIfNull(actual == null);
 
             T[] actualArray = actual.ToArray();
-            T[] expectedArray = actual.OrderByDescending(o => o).ToArray();
+            T[] expectedArray = actualArray.OrderByDescending(o => o).ToArray();
 
             for (int i = 0; i < actualArray.Length && i < expectedArray.Length; i++)
             {
-                actualArray[i].AssertAwesomely(Is.EqualTo(expectedArray[i]), actualArray, expectedArray);
+                if (!actualArray[i].Equals(expectedArray[i]))
+                {
+                    ShouldBeMessage.FailActual(actualArray);
+                }
             }
 
-            return actual;
+            return actualArray;
         }
 
         /// <summary>
@@ -354,17 +367,20 @@ namespace ShouldBe
             where TKey : IComparable
         {
             keySelector.ShouldNotBe(null);
-            ShouldBeMessage.FailActualIfNull(actual);
+            ShouldBeMessage.FailActualIfNull(actual == null);
 
             TElem[] actualArray = actual.ToArray();
-            TElem[] expectedArray = actual.OrderByDescending(keySelector).ToArray();
+            TElem[] expectedArray = actualArray.OrderByDescending(keySelector).ToArray();
 
             for (int i = 0; i < actualArray.Length && i < expectedArray.Length; i++)
             {
-                actualArray[i].AssertAwesomely(Is.EqualTo(expectedArray[i]), actualArray, expectedArray);
+                if (!actualArray[i].Equals(expectedArray[i]))
+                {
+                    ShouldBeMessage.FailActual(actualArray);
+                }
             }
 
-            return actual;
+            return actualArray;
         }
         #endregion
 
@@ -379,7 +395,7 @@ namespace ShouldBe
         /// <returns></returns>
         public static IEnumerable<float> ShouldContain(this IEnumerable<float> actual, float expected, float tolerance)
         {
-            ShouldBeMessage.FailActualIfNull(actual);
+            ShouldBeMessage.FailActualIfNull(actual == null);
 
             if (!actual.Any(a => Math.Abs(expected - a) < tolerance))
             {
@@ -397,7 +413,7 @@ namespace ShouldBe
         /// <returns></returns>
         public static IEnumerable<double> ShouldContain(this IEnumerable<double> actual, double expected, double tolerance)
         {
-            ShouldBeMessage.FailActualIfNull(actual);
+            ShouldBeMessage.FailActualIfNull(actual == null);
 
             if (!actual.Any(a => Math.Abs(expected - a) < tolerance))
             {
@@ -459,7 +475,7 @@ namespace ShouldBe
         /// <returns></returns>
         public static IEnumerable<Decimal> ShouldContain(this IEnumerable<Decimal> actual, Decimal expected, Decimal tolerance)
         {
-            ShouldBeMessage.FailActualIfNull(actual);
+            ShouldBeMessage.FailActualIfNull(actual == null);
 
             if (actual.Any(a => Math.Abs(expected - a) < tolerance))
             {

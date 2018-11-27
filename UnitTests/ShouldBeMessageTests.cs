@@ -28,7 +28,7 @@ namespace ShouldBe.UnitTests
         {
             TestHelper.ShouldFailWithError(
                 () => (new[] { 1, 2, 3 }).ShouldBe(new[] { 2, 2, 3 }),
-                "(new[] { 1, 2, 3 }) should be {2, 2, 3} but was {1, 2, 3} difference {*1*, 2, 3}"
+                "(new[] { 1, 2, 3 }) should be {2, 2, 3} but was {1, 2, 3} difference { *1*, 2, 3 }"
             );
         }
 
