@@ -69,7 +69,10 @@ namespace ShouldBe
 
             for (int i = 0; i < actualArray.Length && i < expectedArray.Length; i++)
             {
-                if (!actualArray[i].Equals(expectedArray[i]))
+                T elActual = actualArray[i];
+                T elExpected = expectedArray[i];
+
+                if (Object.Equals(elActual, elExpected))
                 {
                     ShouldBeMessage.Fail(actualArray, expectedArray);
                 }
