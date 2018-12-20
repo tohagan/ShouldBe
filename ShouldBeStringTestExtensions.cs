@@ -122,5 +122,66 @@ namespace ShouldBe
 
             return value;
         }
+
+        /// <summary>
+        /// Asserts that a string should be null or empty
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string ShouldBeNullOrEmpty(this string value)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                ShouldBeMessage.FailActual(value);
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// Asserts that a string should not be null or empty
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string ShouldNotBeNullOrEmpty(this string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                ShouldBeMessage.FailActual(value);
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// Asserts that a string should be null or empty
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string ShouldBeNullOrWhiteSpace(this string value)
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                ShouldBeMessage.FailActual(value);
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// Asserts that a string should not be null or empty
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string ShouldNotBeNullOrWhiteSpace(this string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                ShouldBeMessage.FailActual(value);
+            }
+
+            return value;
+        }
+
     }
 }

@@ -91,5 +91,43 @@ namespace ShouldBe.UnitTests
         {
             ("Che" + "ez").ShouldContain("hee");
         }
+
+        [Test]
+        public void ShouldBeNullOrEmptyTests()
+        {
+            string x = null;
+            "".ShouldBeNullOrEmpty();
+            x.ShouldBeNullOrEmpty();
+            Assert.Throws<AssertionException>(() => "X".ShouldBeNullOrEmpty());
+        }
+
+        [Test]
+        public void ShouldNotBeNullOrEmptyTests()
+        {
+            "X".ShouldNotBeNullOrEmpty();
+            string x = null;
+            Assert.Throws<AssertionException>(() => "".ShouldNotBeNullOrEmpty());
+            Assert.Throws<AssertionException>(() => x.ShouldNotBeNullOrEmpty());
+        }
+
+        [Test]
+        public void ShouldBeNullOrWhiteSpaceTests()
+        {
+            string x = null;
+            "".ShouldBeNullOrWhiteSpace();
+            "  ".ShouldBeNullOrWhiteSpace();
+            x.ShouldBeNullOrWhiteSpace();
+            Assert.Throws<AssertionException>(() => "X".ShouldBeNullOrWhiteSpace());
+        }
+
+        [Test]
+        public void ShouldNotNullOrWhiteSpaceTests()
+        {
+            "X".ShouldNotBeNullOrWhiteSpace();
+            string x = null;
+            Assert.Throws<AssertionException>(() => "".ShouldNotBeNullOrWhiteSpace());
+            Assert.Throws<AssertionException>(() => "  ".ShouldNotBeNullOrWhiteSpace());
+            Assert.Throws<AssertionException>(() => x.ShouldNotBeNullOrWhiteSpace());
+        }
     }
 }
